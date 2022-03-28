@@ -12,8 +12,11 @@ const io = socketIO(server)
 let file = fs.readdirSync(folderPath).map(fileName =>{
     return path.join(folderPath,fileName)
 })
-let json = fs.readFileSync(file[0])
-let figural = JSON.parse(json)
+let figurals = []
+for (const obj of file) {
+    let json = fs.readFileSync(obj)
+    figurals.push(JSON.parse(json))
+}
 
 app.set("port",5000)
 app.use("/static",express.static(__dirname + "/static"))
@@ -30,35 +33,27 @@ let count = 1
 let cout = 0
 let bool = false
 io.on("connection", (socket) =>{
-    //for (let i = 0; i < 1000; i++) {
-    socket.emit("new figural",figural)
-    //     if (bool == true) {
-    //         cout+=Math.PI/6
-    //         if(cout>=2*Math.PI){
-    //             cout = -2*Math.PI
-    //         }
-    //         figural.x=100*Math.cos(cout*0.1)+300
-    //         figural.y=100*Math.sin(cout*0.1)+400
-    //         bool = false
-    // }
-        
-    //}
-    socket.on("signal",(data)=>{
-        bool = data
-        if (bool == true) {
-            cout+=Math.PI/6
-            // if(cout>=2*Math.PI){
-            //     cout = -2*Math.PI
-            // }
-            figural.x=100*Math.cos(cout*0.1)+500
-            figural.y=100*Math.sin(cout*0.1)+500
-            bool = false
-        }
-        socket.emit("new figural",figural)
-        console.log("нарисовалось?(c socket)",bool)
-    })
-    console.log("нарисовалось?(не из socket)",bool)
     // принимает с клиента данные
+    socket.on("start_firgure",(data)=>{
+        bool = data
+    })
+    setInterval(()=>{
+        socket.emit("printfigural",figurals,(response)=>{
+            if(response && bool){
+                for (const i in figurals) {
+                    if(i == 0){
+                        figure1(figurals[i])
+                    }else if(i == 1){
+                        figure2(figurals[i])
+                    }else if(i ==  2){
+                        figure3(figurals[i])
+                    }
+                }
+            }
+        })
+    },1000/48)
+
+        
     socket.on("new player",()=>{
         players.push({
             id: socket.id,
@@ -73,13 +68,21 @@ io.on("connection", (socket) =>{
         socket.emit("state",players)
         count--
     })
-
-    // отправляет на клиент данные socket.id ,
-    //а new это ключ по которому можно отследить
-    /*
-    socket.emit("new",socket.id)
-    socket.on("hello server",(data) =>{
-        console.log(data)
-    })
-    */
 })
+let figure1 = (figural) =>{
+    cout+=Math.PI/6
+    figural.x=100*Math.cos(cout*0.1)+250
+    figural.y=100*Math.sin(cout*0.1)+250
+    //console.log("нарисовалось?(c socket)")
+}
+
+let figure2 = (figural) =>{
+    cout+=Math.PI/6
+    figural.x=100*Math.sin(cout*0.1)+100
+    figural.y=100*Math.cos(cout*0.1)+100
+}
+let figure3 = (figural) =>{
+    cout+=Math.PI/6
+    figural.x=10*Math.cos(cout*0.1)+75
+    figural.y=10*Math.sin(cout*0.1)+75
+}
