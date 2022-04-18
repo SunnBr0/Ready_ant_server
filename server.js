@@ -1,88 +1,92 @@
-const express = require("express")
-const fs = require('fs')
-const http = require("http")
-const path = require("path")
-const socketIO = require("socket.io")
-const folderPath = './figurage'
+import geckos from '@geckos.io/server'
+import http from 'http'
+import express from 'express'
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import fs from 'fs'
+
+var ant_data = {}
+var bool = false
+var angle = 0
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+fs.readFile(__dirname + "/ant_condition/basic_ant.json",'utf-8',(err,data)=>{
+    if(err) throw err
+    ant_data = JSON.parse(data)
+    console.log(JSON.parse(data))
+})
 
 const app = express()
-const server = http.Server(app)
-const io = socketIO(server)
+const server = http.createServer(app)
+const io = geckos()
 
-let file = fs.readdirSync(folderPath).map(fileName =>{
-    return path.join(folderPath,fileName)
-})
-let figurals = []
-for (const obj of file) {
-    let json = fs.readFileSync(obj)
-    figurals.push(JSON.parse(json))
-}
+app.use(express.static(__dirname + "/static"))
 
-app.set("port",5000)
-app.use("/static",express.static(__dirname + "/static"))
-
-app.get("/",(request,response) =>{
-    response.sendFile(path.join(__dirname + "/static","index.html"))
+app.get("/",(req,res)=>{
+    res.sendFile("index.html")
 })
 
-server.listen(5000,() => {
-    console.log("Starting server on port 5000")
-})
-const players = []
-let count = 1
-let cout = 0
-let bool = false
-io.on("connection", (socket) =>{
-    // принимает с клиента данные
-    socket.on("start_firgure",(data)=>{
-        bool = data
+io.listen(3000) // default port is 9208
+io.addServer(server)
+
+
+io.onConnection(channel => {
+    //channel.emit("get_ant_data",ant_data)
+console.log(`HIE`)
+    channel.on('start',(sign)=>{
+        if (sign){
+            // circle(ant_data)
+            setInterval(()=>{
+                    channel.emit("get_ant_data",ant_data)
+                    circle(ant_data)
+            },1000/60)
+        }
+        // channel.emit("get_ant_data",ant_data)
     })
-    setInterval(()=>{
-        socket.emit("printfigural",figurals,(response)=>{
-            if(response && bool){
-                for (const i in figurals) {
-                    if(i == 0){
-                        figure1(figurals[i])
-                    }else if(i == 1){
-                        figure2(figurals[i])
-                    }else if(i ==  2){
-                        figure3(figurals[i])
-                    }
-                }
-            }
-        })
-    },1000/48)
 
+/*Рабочее
+setInterval(()=>{
+        if (bool) {
+            channel.emit("get_ant_data",ant_data)
+            circle(ant_data)
+        }
+            // channel.emit("get_ant_data",ant_data)
+            // circle(ant_data)
+    },1000/60)*/
+// ЧЕРЕЗ ИНТЕРВАЛ
+    channel.on('start',(sign)=>{
+        bool = sign
+    })
+    console.log(ant_data.x)
+    if (bool) {
+        setInterval(()=>{
+            channel.emit("get_ant_data",ant_data)
+            circle(ant_data)
+        },1000/60)
         
-    socket.on("new player",()=>{
-        players.push({
-            id: socket.id,
-            count: count,
-        })
-        count++
-        //отправляет на клиент данные
-        socket.emit("state",players)
-    })
-    socket.on("disconnect",() =>{
-        players.pop()
-        socket.emit("state",players)
-        count--
-    })
+    }
+  //channel.emit("get_ant_data",ant_data)
+  channel.on('chat message', data => {
+    console.log(`got ${data} from "chat message"`)
+    // emit the "chat message" data to all channels in the same room
+    io.room(channel.roomId).emit('chat message', data)
+  })
+  channel.onDisconnect(() => {
+    console.log(`${channel.id} got disconnected`)
+  })
 })
-let figure1 = (figural) =>{
-    cout+=Math.PI/6
-    figural.x=100*Math.cos(cout*0.1)+250
-    figural.y=100*Math.sin(cout*0.1)+250
-    //console.log("нарисовалось?(c socket)")
+
+function circle(json) {
+    angle+=Math.PI/6
+    // if (angle*12 == 2*Math.PI){
+    //     angle = 0
+    // }
+    json.x=100*Math.cos(angle*0.1)+250
+    json.y=100*Math.sin(angle*0.1)+250
 }
 
-let figure2 = (figural) =>{
-    cout+=Math.PI/6
-    figural.x=100*Math.sin(cout*0.1)+100
-    figural.y=100*Math.cos(cout*0.1)+100
-}
-let figure3 = (figural) =>{
-    cout+=Math.PI/6
-    figural.x=10*Math.cos(cout*0.1)+75
-    figural.y=10*Math.sin(cout*0.1)+75
-}
+server.listen(8080,()=>{
+    console.log("server up")
+})
