@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import fs from 'fs'
 
+
 var ant_data = {}
 var bool = false
 var angle = 0
@@ -34,39 +35,40 @@ io.addServer(server)
 
 io.onConnection(channel => {
     //channel.emit("get_ant_data",ant_data)
-console.log(`HIE`)
-    channel.on('start',(sign)=>{
-        if (sign){
-            // circle(ant_data)
-            setInterval(()=>{
-                    channel.emit("get_ant_data",ant_data)
-                    circle(ant_data)
-            },1000/60)
-        }
-        // channel.emit("get_ant_data",ant_data)
-    })
+// console.log(`HIE`)
+//     channel.on('start',(sign)=>{
+//         if (sign){
+//             // circle(ant_data)
+//             setInterval(()=>{
+//                     channel.emit("get_ant_data",ant_data)
+//                     circle(ant_data)
+//             },1000/60)
+//         }
+//         // channel.emit("get_ant_data",ant_data)
+//     })
 
-/*Рабочее
+/*Рабочее*/
 setInterval(()=>{
         if (bool) {
-            channel.emit("get_ant_data",ant_data)
+            io.room(channel.roomId).emit("get_ant_data",ant_data)
+            // channel.emit("get_ant_data",ant_data)
             circle(ant_data)
         }
             // channel.emit("get_ant_data",ant_data)
             // circle(ant_data)
-    },1000/60)*/
+    },1000/60)
 // ЧЕРЕЗ ИНТЕРВАЛ
     channel.on('start',(sign)=>{
         bool = sign
     })
     console.log(ant_data.x)
-    if (bool) {
-        setInterval(()=>{
-            channel.emit("get_ant_data",ant_data)
-            circle(ant_data)
-        },1000/60)
+    // if (bool) {
+    //     setInterval(()=>{
+    //         channel.emit("get_ant_data",ant_data)
+    //         circle(ant_data)
+    //     },1000/60)
         
-    }
+    // }
   //channel.emit("get_ant_data",ant_data)
   channel.on('chat message', data => {
     console.log(`got ${data} from "chat message"`)
