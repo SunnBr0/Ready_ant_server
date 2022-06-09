@@ -6,18 +6,12 @@ import { dirname } from 'path';
 import fs from 'fs'
 
 
+
 var ant_data = {}
 var bool = false
-var angle = 0
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-fs.readFile(__dirname + "/ant_condition/basic_ant.json",'utf-8',(err,data)=>{
-    if(err) throw err
-    ant_data = JSON.parse(data)
-    console.log(JSON.parse(data))
-})
 
 const app = express()
 const server = http.createServer(app)
@@ -34,60 +28,33 @@ io.addServer(server)
 
 
 io.onConnection(channel => {
-    //channel.emit("get_ant_data",ant_data)
-// console.log(`HIE`)
-//     channel.on('start',(sign)=>{
-//         if (sign){
-//             // circle(ant_data)
-//             setInterval(()=>{
-//                     channel.emit("get_ant_data",ant_data)
-//                     circle(ant_data)
-//             },1000/60)
-//         }
-//         // channel.emit("get_ant_data",ant_data)
-//     })
-
-/*Рабочее*/
-setInterval(()=>{
-        if (bool) {
-            io.room(channel.roomId).emit("get_ant_data",ant_data)
-            // channel.emit("get_ant_data",ant_data)
-            circle(ant_data)
+    const { id, maxMessageSize,roomId } = channel
+    console.log(`id = ${id}\nmax = ${maxMessageSize}\nroomid = ${roomId}`)
+    setInterval(()=>{
+        if(bool){
+            fs.readFile(__dirname + `/ant_condition/basic_ant.json`,'utf-8',(err,data)=>{
+                if(err) throw err
+                io.room(channel.roomId).emit("get_ant_data",data)
+            })
         }
-            // channel.emit("get_ant_data",ant_data)
-            // circle(ant_data)
-    },1000/60)
-// ЧЕРЕЗ ИНТЕРВАЛ
-    channel.on('start',(sign)=>{
-        bool = sign
+
+    },1000/45)
+    
+    //clinet button
+    channel.on("start",sigh =>{
+        bool = sigh
     })
-    console.log(ant_data.x)
-    // if (bool) {
-    //     setInterval(()=>{
-    //         channel.emit("get_ant_data",ant_data)
-    //         circle(ant_data)
-    //     },1000/60)
-        
-    // }
-  //channel.emit("get_ant_data",ant_data)
-  channel.on('chat message', data => {
-    console.log(`got ${data} from "chat message"`)
-    // emit the "chat message" data to all channels in the same room
-    io.room(channel.roomId).emit('chat message', data)
-  })
-  channel.onDisconnect(() => {
-    console.log(`${channel.id} got disconnected`)
-  })
+
+    channel.on('chat message', data => {
+        console.log(`got ${data} from "chat message"`)
+        // emit the "chat message" data to all channels in the same room
+        io.room(channel.roomId).emit('chat message', data)
+    })
+    channel.onDisconnect(() => {
+        console.log(`${channel.id} got disconnected`)
+    })
 })
 
-function circle(json) {
-    angle+=Math.PI/6
-    // if (angle*12 == 2*Math.PI){
-    //     angle = 0
-    // }
-    json.x=100*Math.cos(angle*0.1)+250
-    json.y=100*Math.sin(angle*0.1)+250
-}
 
 server.listen(8080,()=>{
     console.log("server up")

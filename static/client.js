@@ -30,12 +30,10 @@ channel.onConnect(error => {
     return
   }
   channel.on("get_ant_data",json =>{
-    console.log(json)
-    var ant_data = json
+    var ant_data = JSON.parse(json)
+    console.log(ant_data)
     ctx.clearRect(0,0,canvas.height,canvas.width)
     view(ant_data)
-    //channel.emit("start",true)
-    
   })
 
   channel.on('chat message', data => {
