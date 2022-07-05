@@ -5,9 +5,6 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import fs from 'fs'
 
-
-
-var ant_data = {}
 var bool = false
 
 const __filename = fileURLToPath(import.meta.url);
@@ -38,7 +35,7 @@ io.onConnection(channel => {
             })
         }
 
-    },1000/45)
+    },1000/60)
     
     //clinet button
     channel.on("start",sigh =>{

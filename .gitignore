@@ -1,2 +1,4 @@
 /node_modules
 /socket.io
+/test.js
+/copyserver.js

@@ -15,11 +15,12 @@ button.addEventListener('click',(e)=>{
   channel.emit("start",true)
 })
 
-function view(jsons){
+function view(jsons,x,y,color){
   ctx.lineWidth = 3
-  ctx.strokeStyle = "red"
+  ctx.strokeStyle = color
   ctx.beginPath()
-  ctx.strokeRect(jsons.x,jsons.y,jsons.width,jsons.height)
+ ctx.strokeRect(x,y,jsons.width,jsons.height)
+
   ctx.closePath() 
 }
 
@@ -33,7 +34,9 @@ channel.onConnect(error => {
     var ant_data = JSON.parse(json)
     console.log(ant_data)
     ctx.clearRect(0,0,canvas.height,canvas.width)
-    view(ant_data)
+    for(let i =0;i<ant_data.coordinates.length;i++){
+      view(ant_data,ant_data.coordinates[i][0],ant_data.coordinates[i][1],"red")
+    }
   })
 
   channel.on('chat message', data => {
