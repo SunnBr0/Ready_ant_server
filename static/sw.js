@@ -3,7 +3,7 @@ const CacheKey = "cache-v1";
 const initCache = () => {
   return caches.open(CacheKey).then((cache) => {
     return cache.addAll([
-      "./index.html", 
+      "./index.html",
   ]);
   }, (error) => {
     console.log(error)
@@ -26,13 +26,11 @@ const tryNetwork = (req, timeout) => {
   });
 };
 
-const getFromCache = (req) => {
+const getFromCache = async (req) => {
   console.log('network is off so getting from cache...')
-  return caches.open(CacheKey).then((cache) => {
-    return cache.match(req).then((result) => {
-      return result || Promise.reject("no-match");
-    });
-  });
+  const cache = await caches.open(CacheKey);
+  const result = await cache.match(req);
+  return result || Promise.reject("no-match");
 };
 
 self.addEventListener("install", (e) => {
