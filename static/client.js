@@ -1,47 +1,32 @@
-const button = document.getElementById('#start')
-const canvas = document.getElementById('#map')
-const ctx = canvas.getContext("2d")
+import{ create_ant_with_json} from "./basis_ant_html.js"
 
-canvas.height = 1000
-canvas.width = 1000
-
-
-// or add a minified version to your index.html file/
-// https://github.com/geckosio/geckos.io/tree/master/bundles
-const channel = geckos({ port: 3000 })    // default port is 9208
-
-button.addEventListener('click',(e)=>{
-  e.preventDefault()
-  channel.emit("start",true)
-})
-
-function view(jsons){
-  ctx.lineWidth = 3
-  ctx.strokeStyle = "red"
-  ctx.beginPath()
-  ctx.strokeRect(jsons.x,jsons.y,jsons.width,jsons.height)
-  ctx.closePath() 
+const onWorkerReady = () => {
+  console.log('SW is ready');
 }
+navigator.serviceWorker.register('sw.js');
+navigator.serviceWorker.ready.then(onWorkerReady);
 
-console.log(`HIE`)
+let svg = document.getElementById("another_ant")
+let bg_ant_place = document.getElementById("bg_ant_place")
+let model_ant = document.getElementById("model_ant")
+console.log(model_ant);
+svg.style.background = "gray"
+bg_ant_place.setAttribute("height","500.000000pt")
+bg_ant_place.setAttribute("width","500.000000pt")
+bg_ant_place.style.background = "yellow"
+svg.getAttribute("transform")
+
+const channel = geckos({ port: 3000 }) // default port is 9208
 channel.onConnect(error => {
   if (error) {
     console.error(error.message)
-    return
+    return error.message
   }
-  channel.on("get_ant_data",json =>{
-    console.log(json)
-    var ant_data = json
-    ctx.clearRect(0,0,canvas.height,canvas.width)
-    view(ant_data)
-    //channel.emit("start",true)
-    
+ channel.on('chat message', data => {
+  try{
+    let ant_server = JSON.parse(data)
+    create_ant_with_json(ant_server)
+  }catch{}
   })
 
-  channel.on('chat message', data => {
-    console.log(`You got the message ${data}`)
-  })
-
-  channel.emit('chat message', 'a short message sent to the server')
 })
-
