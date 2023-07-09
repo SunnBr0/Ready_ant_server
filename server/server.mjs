@@ -16,11 +16,11 @@ io.listen(3000)
 io.onConnection(channel => {
 
     setInterval(()=>{
-      read_json_url_path("/ant_basic/ant.json")
+      read_json_url_path("/ant_basic/ant_rs.json")
       .then((json_ant)=>{
         io.room(channel.roomId).emit('chat message', json_ant)
       })
-    },500)
+    },50)
 
     channel.on('cash_html',(data) =>{
       write_for_cash("/ant_basic/text.txt",data)
@@ -28,13 +28,6 @@ io.onConnection(channel => {
     })
     channel.onDisconnect((event) => {
       console.log(`${channel.id} got disconnected`)
-      //ЭТО РАБОТАЕТ (ЗАПИСЬ КОГДА ЧЕЛОВЕК ОТКЛЮЧАЕТСЯ)
-      // read_json_url_path("/ant_basic/text.txt")
-      // .then((data)=>{
-      //   write_for_cash("/static/index.html",data)
-      //     .then(data => console.log(data))
-      // })
-      
     })
 
   })
