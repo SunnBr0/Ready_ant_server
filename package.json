@@ -6,8 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./game_engine.js | node ./server/server.mjs ",
-    "prob": "node ./server/server.mjs | node ./generation_rs.js"
+    "prob": "node ./game_engine.js | node ./server/server.mjs ",
+    "start": "node ./server/server.mjs | node ./generation_rs.js | cargo run --manifest-path ./RustAntgine/Cargo.toml "
   },
   "author": "",
   "license": "ISC",
