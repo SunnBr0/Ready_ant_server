@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Муравьи. Игра. Приложение. Браузерное развитие игры.">
+    <meta name="description"
+        content="Браузерная игра, симулирующая поведение муравьев, с эелементами стратегии и песочницы">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../script/geckos.io-client.2.1.8.min.js"></script>
+    <title>Biogames</title>
+</head>
+
+<body>
+
+    <header class="header">
+        <nav class="nav">
+            <ul class="nav__list">
+
+                <li class="nav__item">
+                    <img class="nav__logo" src="img/logo.webp" alt="logo game">
+                </li>
+
+                <li class="nav__item">
+                    <h1 class="nav__title"><a class="nav__link" href="index.html">ANTS</a></h1>
+                </li>
+
+                <li class="nav__item">
+                    <button class="nav__button">СООБЩИТЬ ОБ ОШИБКЕ</button>
+                </li>
+            </ul>
+
+            <div class="nav__menu">
+
+                <p class="nav__arrow">&darr;</p>
+
+                <input class="nav__menu-input" type="checkbox" id="menu__input">
+                <label class="nav__menu-toggle" for="menu__input" id="menu-toggle"></label>
+
+                <p class="nav__arrow">&darr;</p>
+
+                <div class="nav__content" id="nav-content">
+                    <h1 class="nav__content-title">Добро пожаловать!</h1>
+                    <p class="nav__content-description">
+                        Перед вашими глазами предстаёт заранее сгенерированная симуляция муравьёв.
+                        Вы можете <a href="index.html" class="nav__content-link">продолжить наблюдать без ограничений,
+                            свернув данное окно</a>, или попробовать <a href="index.html" class="nav__content-link">
+                            создать собственную симуляцию</a> со своими настройками,
+                        <a href="index.html" class="nav__content-link">зарегистрировавшись</a>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="nav__options">
+
+                <select class="nav__language">
+                    <option class="language__option">RU</option>
+                    <option class="language__option">EN</option>
+                    <option class="language__option">KZ</option>
+                </select>
+
+                <img class="nav__language-avatar" src="img/ru.webp" alt="language avatar">
+
+                <a class="nav__support" href="index.html">ПОДДЕРЖАТЬ<br>ПРОЕКТ</a>
+
+                <button class="nav__register-button">ВОЙТИ</button>
+            </div>
+        </nav>
+
+        <section class="main__section">
+
+            <h3 class="main__section-title">Войдите в аккаунт</h3>
+
+            <form class="main__form">
+
+                <label class="main__label" for="login">Логин:</label><br>
+                <input class="main__input" id="login" type="email" placeholder="Введите логин" required><br>
+
+                <label class="main__label" for="password">Пароль:</label><br>
+                <input class="main__input" id="password" type="password" placeholder="Введите пароль" required><br>
+
+                <label class="main__label" id="log-nick" for="nick">Ваш ник:</label><br>
+                <input class="main__input" id="nick" type="text" placeholder="Введите ваш ник"><br>
+
+                <hr class="main__hr"><br>
+                <a class="main__button" href="index.html">ВОЙТИ</a><br>
+
+                <p class="main__paragraph">У вас еще нет аккаунта?
+                    <a class="main__link" href="index.html">Зарегистрироваться</a>
+                </p><br>
+
+                <p class="main__author">© 2023 Created by BioGames</p>
+            </form>
+        </section>
+
+
+        <section class="main__section">
+
+            <h3 class="main__section-title">Создайте аккаунт</h3>
+
+            <form class="main__form">
+
+                <label class="main__label" for="reg-login">Логин:</label><br>
+                <input class="main__input" id="reg-login" type="email" placeholder="Введите логин" required><br>
+
+                <label class="main__label" for="reg-password">Пароль:</label><br>
+                <input class="main__input" id="reg-password" type="password" placeholder="Введите пароль" required><br>
+
+                <label class="main__label" for="confirm-password">Подтверждение пароля:</label><br>
+                <input class="main__input" id="confirm-password" type="password" placeholder="Подтвердите пароль"
+                    required><br>
+
+                <hr class="main__hr"><br>
+                <a class="main__button" href="index.html">ПРОДОЛЖИТЬ</a><br>
+
+                <p class="main__paragraph">Уже есть аккаунт?
+                    <a class="main__link" href="index.html">Войти</a>
+                </p><br>
+
+                <p class="main__author">© 2023 Created by BioGames</p>
+            </form>
+        </section>
+
+    </header>
+
+
+    <main class="main">
+
+
+    </main>
+
+
+    <footer class="footer">
+
+        <h1 class="footer__title"><a class="footer__link" href="index.html">ANTS</a></h1>
+
+        <ul class="footer__list">
+            <li class="footer__item">Контакты</li>
+            <li class="footer__item">Сообщить об ошибке</li>
+            <li class="footer__item">Справка</li>
+        </ul>
+
+        <p class="footer__terms">Условия пользования</p>
+
+        <div class="footer__contacts">
+            <a href="index.html"><img class="contact__image" src="img/linkedin.png" alt="icon"></a>
+            <a href="index.html"><img class="contact__image" src="img/vk.png" alt="icon"></a>
+            <a href="index.html"><img class="contact__image" src="img/tg.png" alt="icon"></a>
+        </div>
+
+    </footer>
+    <script src="../script/script.js"></script>
+</body>
+
+</html>

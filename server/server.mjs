@@ -7,8 +7,8 @@ import http from 'http'
 const app = express()
 const server = http.createServer(app)
 const io = geckos()
-
 app.use(express.static(full_path("/static")));
+
 
 io.addServer(server)
 io.listen(3000) 
@@ -17,7 +17,9 @@ io.onConnection(channel => {
 
     setInterval(()=>{
       read_json_url_path("/ant_basic/ant_rs.json")
+      read_json_url_path("/ant_basic/ant_rs.json")
       .then((json_ant)=>{
+        io.room(channel.roomId).emit('chat message', json_ant)
         io.room(channel.roomId).emit('chat message', json_ant)
       })
     },50)
@@ -28,13 +30,14 @@ io.onConnection(channel => {
     })
     channel.onDisconnect((event) => {
       console.log(`${channel.id} got disconnected`)
+      console.log(`${channel.id} got disconnected`)
     })
 
   })
 
 
 app.get("/",(req,res)=>{
-    res.sendFile(full_path("/index.html"))
+    res.sendFile(full_path("/static/html/index.html"))
 })
 
 server.listen(8080,()=>{
