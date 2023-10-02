@@ -16,10 +16,9 @@ io.listen(3000)
 io.onConnection(channel => {
 
     setInterval(()=>{
-      read_json_url_path("/ant_basic/ant_rs.json")
+      // read_json_url_path("/ant_basic/ant_rs.json")
       read_json_url_path("/ant_basic/ant_rs.json")
       .then((json_ant)=>{
-        io.room(channel.roomId).emit('chat message', json_ant)
         io.room(channel.roomId).emit('chat message', json_ant)
       })
     },50)
@@ -29,7 +28,6 @@ io.onConnection(channel => {
         .then(data => console.log(data))
     })
     channel.onDisconnect((event) => {
-      console.log(`${channel.id} got disconnected`)
       console.log(`${channel.id} got disconnected`)
     })
 

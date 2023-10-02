@@ -1,0 +1,6 @@
+
+canvas{
+    background-color: gray;
+    position: absolute;
+    z-index: -1;
+}

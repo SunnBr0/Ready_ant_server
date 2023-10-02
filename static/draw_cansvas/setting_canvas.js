@@ -1,6 +1,6 @@
 const canvas = document.getElementById('canvas');
-canvas.width = 800
-canvas.height = 800
+canvas.width = 1350
+canvas.height = 650
 const ctx = canvas.getContext('2d');
 canvas.style.backgroundColor = "yellow"
 document.body.appendChild(canvas);

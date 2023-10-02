@@ -84,6 +84,7 @@ body {
 }
 
 .nav__menu {
+    
     width: 33%;
     display: flex;
     justify-content: center;
@@ -95,6 +96,7 @@ body {
 }
 
 .nav__arrow {
+
     margin: 10px;
 }
 
