@@ -3,4 +3,8 @@ canvas{
     background-color: gray;
     position: absolute;
     z-index: -1;
+    max-width:1920 ;
+    max-height:700;
+    width: 1920;
+    height: 100%;
 }

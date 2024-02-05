@@ -9,7 +9,6 @@ const server = http.createServer(app)
 const io = geckos()
 app.use(express.static(full_path("/static")));
 
-
 io.addServer(server)
 io.listen(3000) 
 
