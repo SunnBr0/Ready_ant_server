@@ -36,7 +36,9 @@ io.onConnection(channel => {
 app.get("/",(req,res)=>{
     res.sendFile(full_path("/static/html/index.html"))
 })
-
+app.get("/red",(req,res)=>{
+  res.sendFile(full_path("/static/html/redactor.html"))
+})
 server.listen(8080,()=>{
     console.log("Server start....")
 })
