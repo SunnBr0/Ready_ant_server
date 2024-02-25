@@ -1,0 +1,29 @@
+#main_window{
+  display: flex;
+  
+}
+
+#draw_instruments{
+  display: flex;
+  flex-direction: column;  
+}
+
+
+.image-button {
+  background: gray;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-size: cover;
+  }
+
+
+  .image-button:hover {
+    opacity: 0.8;
+  }
+  
+  .image-button:active {
+    transform: scale(0.95);
+  }

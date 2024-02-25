@@ -8,11 +8,27 @@
             border:1px solid black;
         }
     </style>
+    <link rel="stylesheet" href="../css/style_redactor/redactor.css">
     <script type="module" src="../script/draw_redactor/redactor.js"></script>
     <script type="module" src="../script/draw_redactor/tools.js"></script>
 
   </head>
   <body>
-    <canvas id="draw_map" width="400" height="400"></canvas>
+    <div id="main_window">
+
+      <div id="draw_instruments">
+        <button class="image-button" value="draw">
+          <img src="../img/img_redactor/brush.png" alt="Иконка" width="20" height="20">
+        </button>
+        <button class="image-button" value="clear">
+          <img src="../img/img_redactor/eraser.png" alt="Иконка" width="20" height="20">
+        </button>
+      </div>
+
+      <div id="map">
+        <canvas id="draw_map" width="400" height="400"></canvas>
+      </div>
+
+    </div>
   </body>
 </html>

@@ -16,7 +16,7 @@ class ToolsDraw{
         }
       	// to increase smoothing for numbers with decimal part
       	let pointX = Math.round(x);
-          let pointY = Math.round(y);
+        let pointY = Math.round(y);
         this.context.beginPath();
         this.context.fillStyle = color;
         this.context.arc(pointX, pointY, size, 0 * Math.PI, 2 * Math.PI);
