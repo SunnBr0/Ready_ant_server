@@ -11,7 +11,10 @@ function draw_point_linear(event,type_click) {
     if (event.buttons == type_click) {
         Tools_draw.drawPoint(x +Tools_draw.delta_x, y +Tools_draw.delta_y, '', 'red', 5);
     }
+    
 }
+
+
 
 export{
     draw_point_linear

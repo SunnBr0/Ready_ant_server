@@ -25,6 +25,14 @@ class ToolsDraw{
         this.context.fillStyle = color;
         this.context.arc(pointX, pointY, size, 0 * Math.PI, 2 * Math.PI);
         this.context.fill();
+        // this.context.moveTo(pointX, pointY)
+        // this.context.lineTo(pointX,pointY)
+        // this.context.strokeStyle = color
+        // this.context.lineWidth = size
+        // this.context.lineCap = "round"
+        // this.context.lineJoin = "round"
+        // this.context.stroke()
+        // this.context.closePath()
       	if (label) {
             let textX = pointX;
             let textY = Math.round(pointY - size - 3);
