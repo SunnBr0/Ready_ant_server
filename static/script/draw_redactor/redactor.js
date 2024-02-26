@@ -23,8 +23,9 @@ function start(event){
     is_drawing = true
     context.beginPath()
     context.moveTo(event.clientX + delta_x,event.clientY + delta_y)
+    context.lineTo(event.clientX + delta_x,event.clientY + delta_y)
 }
-function draw(event,color = draw_color,size = draw_width){
+function draw(event,color = draw_color,size = draw_width,obj = "dada"){
     if(is_drawing){
         context.lineTo(event.clientX + delta_x,event.clientY + delta_y)
         context.strokeStyle = color
@@ -32,6 +33,7 @@ function draw(event,color = draw_color,size = draw_width){
         context.lineCap = "round"
         context.lineJoin = "round"
         context.stroke()
+        console.log(obj);
     }
 
 }
@@ -48,15 +50,14 @@ draw_instruments.addEventListener("click", (event) => {
     choice = event.target.closest("button").value
     switch (choice) {
         case "clear":
-            console.log(draw_map.dispatchEvent(event));
             draw_map.addEventListener("mousedown",start,false)
-            draw_map.addEventListener("mousemove",(event)=>draw(event,"red",2),false)
+            draw_map.addEventListener("mousemove",(event)=>draw(event,"red",2,"aaaddd"),false)
             draw_map.addEventListener("mouseup",stop,false)
             draw_map.addEventListener("mouseout",stop,false)
-            console.log("fdd");
+            console.dir("Dasd");
+            console.dir(draw_map.addEventListener);
             break;
         case "draw":
-            console.log(draw_map.dispatchEvent(event));
 
             // draw_map.addEventListener('click', (event) => draw_point_linear(event, 0))
             // draw_map.addEventListener('mousemove', (event) => draw_point_linear(event, 1))
