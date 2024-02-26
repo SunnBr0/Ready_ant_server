@@ -1,7 +1,11 @@
 class ToolsDraw{
-    context;
-    constructor(context){
+    context
+    delta_x
+    delta_y
+    constructor(context,delta_x,delta_y){
         this.context = context
+        this.delta_x = delta_x
+        this.delta_y = delta_y
     }
     print(){
         console.log(this.context);
