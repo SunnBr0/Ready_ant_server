@@ -41,6 +41,7 @@ class ToolsDraw{
               this.context.textAlign = 'center';
               this.context.fillText(label, textX, textY);
         }
+        this.context.fillStyle = null
     }
 }
 

@@ -1,38 +1,19 @@
 import { ToolsDraw } from "./tools.js"
 import { draw_point_linear } from "./function_draw.js"
+import {COLOR_CURENT,SIZE_LINE} from "./options_draw.js"
 let draw_map = document.getElementById('draw_map')
 let button_tools_draw = document.getElementsByClassName("image-button")
 let draw_instruments = document.getElementById("draw_instruments")
 let context = draw_map.getContext('2d');
 console.dir(draw_instruments);
 
-let Tools_draw = new ToolsDraw(context)
-Tools_draw.drawPoint(20, 30, 'A', 'red', 1);
+// let Tools_draw = new ToolsDraw(context)
+// Tools_draw.drawPoint(20, 30, 'A', 'red', 1);
 
 let choice = null
 let is_drawing = false
-let draw_width = 5
-let draw_color = "red"
 let prevMouseX, prevMouseY, snapshot;
-// context.beginPath()
-// context.lineWidth = draw_width
-// context.strokeRect(100, 100, 1, 1);
-// context.lineTo(97,100)
-// context.lineTo(110,100)
-// context.lineTo(110,110)
-// context.lineTo(100,110)
-// context.lineTo(100,100)
 
-// context.stroke()
-// context.fill();
-// context.beginPath();
-// context.lineWidth = 10
-// context.strokeRect(40, 130, 200, 150);
-// context.fillStyle = "rgb(200, 0, 0)";
-// context.fillRect(15, 15, draw_width, draw_width);
-// context.moveTo(x, y);
-// context.lineTo(x, y);
-// context.stroke();
 function drawRect(event) {
     context.strokeRect(event.offsetX, event.offsetY, prevMouseX - event.offsetX, prevMouseY - event.offsetY);
 }
@@ -47,6 +28,8 @@ function start(event, draw_color, draw_width) {
     context.beginPath()
     context.lineWidth = draw_width
     context.strokeStyle = draw_color
+    context.fillStyle = draw_color;
+    console.log(SIZE_LINE);
 
     switch (choice) {
         case "draw":
@@ -61,7 +44,7 @@ function start(event, draw_color, draw_width) {
     snapshot = context.getImageData(0, 0, draw_map.width, draw_map.height)
     console.log("d");
 }
-function draw(event, color = draw_color, size = draw_width, choice) {
+function draw(event,  choice) {
     if (!is_drawing) return
     context.putImageData(snapshot, 0, 0)
     switch (choice) {
@@ -96,8 +79,8 @@ function stop(event) {
 
 }
 
-draw_map.addEventListener("mousedown", (event) => start(event, draw_color, draw_width), false)
-draw_map.addEventListener("mousemove", (event) => draw(event, draw_color, draw_width, choice), false)
+draw_map.addEventListener("mousedown", (event) => start(event, COLOR_CURENT, SIZE_LINE), false)
+draw_map.addEventListener("mousemove", (event) => draw(event,  choice), false)
 draw_map.addEventListener("mouseup", stop, false)
 draw_map.addEventListener("mouseout", stop, false)
 

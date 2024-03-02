@@ -1,29 +1,62 @@
-#main_window{
+#main_window {
   display: flex;
-  
+
 }
 
-#draw_instruments{
+#draw_instruments {
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
 }
-
 
 .image-button {
   background: gray;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 30px;
-    height: 30px;
-    border: none;
-    background-size: cover;
-  }
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-size: cover;
+}
 
 
-  .image-button:hover {
-    opacity: 0.8;
-  }
-  
-  .image-button:active {
-    transform: scale(0.95);
-  }
+.image-button:hover {
+  opacity: 0.8;
+}
+
+.image-button:active {
+  transform: scale(0.95);
+}
+
+.color_item {
+  background-color:red;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.color_item:nth-child(1){
+  background-color:  #000;
+}
+.color_item:nth-child(2){
+  background-color: red;
+}
+.color_item:nth-child(3){
+  background-color: #fffb00;
+}
+.color_item:nth-child(4){
+  background-color: #51ff00;
+}
+.color_item:nth-child(5){
+  background-color: #1900ff;
+}
+
+#choice_color {
+  list-style-type: none;
+  display: flex;
+}
+
+#options_draw {
+  display: flex;
+  align-items: center;
+}
