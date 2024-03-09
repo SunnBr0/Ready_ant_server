@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simple example</title>
+  <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.4.0/fabric.min.js'></script>
+  <style type='text/css'>
+    #draw_map {
+      border: 1px solid black;
+    }
+  </style>
+  <link rel="stylesheet" href="../css/style_redactor/redactor.css">
+  <script type="module" src="../script/draw_redactor/redactor.js"></script>
+  <script type="module" src="../script/draw_redactor/tools.js"></script>
+  <script type="module" src="../script/draw_redactor/function_draw.js"></script>
+
+</head>
+
+<body>
+
+  <div id="options_draw">
+    <input type="range" min="1" max="15" id="size_line">
+    <input type="color" id="color_line">
+    <ul id="choice_color">
+      <li class="color_item"></li>
+      <li class="color_item"></li>
+      <li class="color_item"></li>
+      <li class="color_item"></li>
+      <li class="color_item"></li>
+    </ul>
+  </div>
+  <div id="main_window">
+
+<!-- https://domikdomovenka.ru/products/ierarhiya-muravev ВСЁ Об МУРАВЬЁВ -->
+    <ul id="draw_instruments">
+      <li>
+        <button class="image-button" value="draw">
+          <img src="../img/img_redactor/brush.png" alt="Иконка" width="20" height="20">
+        </button>
+      </li>
+      <li>
+        <button class="image-button" value="clear">
+          <img src="../img/img_redactor/eraser.png" alt="Иконка" width="20" height="20">
+        </button>
+      </li>
+      <li>
+        <button class="image-button" value="type_ant">
+          <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+        </button>
+        <div class="type_item_tools">
+          <button class="image-button" value="RAbota_ant">
+            <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+          </button>
+          <button class="image-button" value="mama_ant">
+            <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+          </button>
+          <button class="image-button" value="soldat_ant">
+            <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+          </button>
+        </div>
+      </li>
+      <li>
+        <button class="image-button" value="selecting">
+          <img src="../img/img_redactor/border-outer.png" alt="Иконка" width="20" height="20">
+        </button>
+      </li>
+      <li>
+        <button class="image-button" value="find_color">
+          <img src="../img/img_redactor/eyedropper.png" alt="Иконка" width="20" height="20">
+        </button>
+      </li>
+      <li>
+        <button class="image-button" value="move_map">
+          <img src="../img/img_redactor/hand-index-thumb.png" alt="Иконка" width="20" height="20">
+        </button>
+      </li>
+      <li>
+        <button class="image-button" value="full_color">
+          <img src="../img/img_redactor/bucket.png" alt="Иконка" width="20" height="20">
+        </button>
+      </li>
+      <li>
+        <button class="image-button" value="zoom">
+          <img src="../img/img_redactor/search.png" alt="Иконка" width="20" height="20">
+        </button>
+      </li>
+      <li>
+        <button class="image-button" value="figure">
+          <img src="../img/img_redactor/square-3-stack-3d.png" alt="Иконка" width="20" height="20">
+        </button>
+      </li>
+      <li>
+        <button class="image-button" value="full_clear">
+          <img src="../img/img_redactor/sparkles.png" alt="Иконка" width="20" height="20">
+        </button>
+      </li>
+    </ul>
+
+
+      <!-- <div>
+          <button class="image-button" value="type_ant">
+            <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+          </button>
+          <div class="type_item_tools">
+            <button class="image-button" value="type_ant">
+              <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+            </button>
+            <button class="image-button" value="type_ant">
+              <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+            </button>
+            <button class="image-button" value="type_ant">
+              <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+            </button>
+          </div>
+        </div> -->
+
+
+
+
+
+
+
+
+
+    <div id="map">
+      <canvas id="draw_map" width="400" height="400"></canvas>
+    </div>
+
+  </div>
+
+</body>
+<script type="module" src="../script/draw_redactor/options_draw.js"></script>
+
+</html>
