@@ -79,3 +79,30 @@
   display: none;
   margin-left: 5px;
 }
+
+#layer_instruments{
+  height: 50px;
+  width: 200px;
+  background-color: blue;
+  flex-direction:row;
+  justify-content: flex-start;
+	align-items: flex-end;
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+.item_layer_instruments{
+  width: 20px;
+  height: 20px;
+  background-color: gray;
+}
+
+#layer_list{
+  background-color: red;
+}
+
+#panel_layer{
+  list-style-type: none;
+  height: 300px;
+}
