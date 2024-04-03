@@ -100,9 +100,23 @@
 
 #layer_list{
   background-color: red;
+  list-style-type: none;
+  padding: 0px;
 }
 
 #panel_layer{
+  display: flex;
+  flex-direction:column;
+  justify-content: flex-end;
+
   list-style-type: none;
-  height: 300px;
+  height: 370px;
+}
+
+.layer_container_item{
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+
+
 }
