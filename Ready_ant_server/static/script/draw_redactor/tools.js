@@ -1,50 +1,124 @@
+import {among_us_origin,among_us,ant_base_paht} from "../draw_cansvas/type_ant.js"
+
+
 class ToolsDraw{
+
     context
-    delta_x
-    delta_y
-    constructor(context,delta_x,delta_y){
+    event
+    is_drawing = false
+    snapshot
+    prevMouseX
+    prevMouseY
+    SIZE_LINE
+    choice
+    COLOR_CURENT
+    ant_base_paht
+    constructor(context){
         this.context = context
-        this.delta_x = delta_x
-        this.delta_y = delta_y
-    }
-    print(){
-        console.log(this.context);
     }
 
-    drawPoint(x, y, label="", color, size){
-        if (color == null) {
-        	color = '#000';
-        }
-        if (size == null) {
-            size = 5;
-        }
-      	// to increase smoothing for numbers with decimal part
-      	let pointX = Math.round(x);
-        let pointY = Math.round(y);
-        this.context.beginPath();
-        this.context.fillStyle = color;
-        this.context.arc(pointX, pointY, size, 0 * Math.PI, 2 * Math.PI);
-        this.context.fill();
-        // this.context.moveTo(pointX, pointY)
-        // this.context.lineTo(pointX,pointY)
-        // this.context.strokeStyle = color
-        // this.context.lineWidth = size
-        // this.context.lineCap = "round"
-        // this.context.lineJoin = "round"
-        // this.context.stroke()
-        // this.context.closePath()
-      	if (label) {
-            let textX = pointX;
-            let textY = Math.round(pointY - size - 3);
-              this.context.font = 'Italic 14px Arial';
-              this.context.fillStyle = color;
-              this.context.textAlign = 'center';
-              this.context.fillText(label, textX, textY);
-        }
-        this.context.fillStyle = null
+    setChoice(choice){
+        this.choice = choice
     }
+    setSizeLine(sizeLine){
+        this.SIZE_LINE = sizeLine
+    }
+    setColorCurent(colorCurent){
+        this.COLOR_CURENT = colorCurent
+    }
+
+    drawRect(event) {
+         this.context.strokeRect(event.offsetX, event.offsetY, this.prevMouseX - event.offsetX, this.prevMouseY - event.offsetY);
+    }
+    fullClear() {
+        this.context.clearRect(0, 0, draw_map.width, draw_map.height);
+    }
+    
+    start(event,COLOR_CURENT,SIZE_LINE) {
+        this.COLOR_CURENT = COLOR_CURENT
+        this.SIZE_LINE = SIZE_LINE
+        this.is_drawing = true
+        this.prevMouseX = event.offsetX
+        this.prevMouseY = event.offsetY
+        this.context.beginPath()
+        this.context.lineWidth = this.SIZE_LINE
+        this.context.strokeStyle = this.COLOR_CURENT
+        this.context.fillStyle = this.COLOR_CURENT;
+        console.log(this.SIZE_LINE);
+        console.log("DASDADSASD");
+        switch (this.choice) {
+            case "RAbota_ant":
+                this.context.translate(this.prevMouseX, this.prevMouseY);
+                this.context.rotate(180)
+                this.context.fill(ant_base_paht)
+                this.context.resetTransform();
+                break;
+            case "mama_ant":
+                this.context.translate(this.prevMouseX, this.prevMouseY);
+                this.context.rotate(0)
+                this.context.scale(10,10)
+                this.context.lineWidth = 0.1
+                this.context.stroke(among_us)
+                this.context.resetTransform();
+                break;
+            case "soldat_ant":
+                this.context.translate(this.prevMouseX, this.prevMouseY);
+                this.context.rotate(180)
+                this.context.fill(among_us_origin)
+                this.context.resetTransform();
+                break;
+            case "draw":
+                this.context.fillRect(this.prevMouseX - Math.round(this.SIZE_LINE / 2), this.prevMouseY - Math.round(this.SIZE_LINE / 2), this.SIZE_LINE, this.SIZE_LINE);
+                break;
+            case "full_clear":
+                this.fullClear(event)
+                break;
+    
+            default:
+                break;
+        }
+
+        this.snapshot = this.context.getImageData(0, 0, this.context.canvas.width, this.context.canvas.height)
+        console.log("d");
+    }
+    draw(event, choice) {
+        if (!this.is_drawing) return
+        this.context.putImageData(this.snapshot, 0, 0)
+        switch (choice) {
+            case "draw":
+                this.context.lineTo(event.offsetX, event.offsetY)
+                this.context.stroke()
+                break;
+            case "clear":
+                this.context.strokeStyle = "#fff"
+                this.context.lineTo(event.offsetX, event.offsetY)
+                this.context.stroke()
+                break;
+            case "figure":
+                this.drawRect(event)
+                break;
+            case "full_clear":
+                this.fullClear(event)
+                break;
+            default:
+                break;
+        }
+        console.log("obj");
+        console.log(event.offsetX);
+        console.log(event.offsetY);
+    }
+
+    stop(event) {
+        console.log("######");
+        if (this.is_drawing) {
+            this.context.stroke()
+            this.context.closePath()
+            this.is_drawing = false
+        }
+    
+    }
+    
 }
-
 
 export{
     ToolsDraw
