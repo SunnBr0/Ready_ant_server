@@ -3,7 +3,6 @@ import geckos from '@geckos.io/server'
 import {full_path, dir_path_folder_test} from './path_name_dir.mjs'
 import {read_json_url_path,write_for_cash} from './read_json.mjs'
 import http from 'http'
-
 const app = express()
 const server = http.createServer(app)
 const io = geckos()
@@ -11,15 +10,24 @@ app.use(express.static(full_path("/static")));
 
 io.addServer(server)
 io.listen(3000) 
+//requestAnimationFrame
+
+
+function updateTime(channel){
+// requestAnimationFrame(updateTime)
+  read_json_url_path("/ant_basic/ant_rs.json")
+  .then((json_ant)=>{
+    io.room(channel.roomId).emit('chat message', json_ant)
+    // requestAnimationFrame(updateTime)
+  })
+}
 
 io.onConnection(channel => {
-
+    // requestAnimationFrame(updateTime)
+    // updateTime(channel)
+    // console.log("ASDADASDASD");
     setInterval(()=>{
-      // read_json_url_path("/ant_basic/ant_rs.json")
-      read_json_url_path("/ant_basic/ant_rs.json")
-      .then((json_ant)=>{
-        io.room(channel.roomId).emit('chat message', json_ant)
-      })
+      updateTime(channel)
     },50)
 
     channel.on('cash_html',(data) =>{
