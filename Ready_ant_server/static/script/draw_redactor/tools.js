@@ -28,6 +28,7 @@ class ToolsDraw{
     }
 
     drawRect(event) {
+        this.context.lineJoin = ""
          this.context.strokeRect(event.offsetX, event.offsetY, this.prevMouseX - event.offsetX, this.prevMouseY - event.offsetY);
     }
     fullClear() {
@@ -44,6 +45,8 @@ class ToolsDraw{
         this.context.lineWidth = this.SIZE_LINE
         this.context.strokeStyle = this.COLOR_CURENT
         this.context.fillStyle = this.COLOR_CURENT;
+        // this.context.lineCap = "round"
+        // this.context.lineJoin = "bevel"
         console.log(this.SIZE_LINE);
         console.log("DASDADSASD");
         switch (this.choice) {
@@ -68,7 +71,15 @@ class ToolsDraw{
                 this.context.resetTransform();
                 break;
             case "draw":
-                this.context.fillRect(this.prevMouseX - Math.round(this.SIZE_LINE / 2), this.prevMouseY - Math.round(this.SIZE_LINE / 2), this.SIZE_LINE, this.SIZE_LINE);
+                this.context.lineCap = "round"
+                this.context.lineJoin = "round"
+                // this.context.fillRect(this.prevMouseX - Math.round(this.SIZE_LINE / 2), this.prevMouseY - Math.round(this.SIZE_LINE / 2), this.SIZE_LINE, this.SIZE_LINE);
+                // this.context.fillRect(this.prevMouseX - Math.round(this.SIZE_LINE / 2), this.prevMouseY - Math.round(this.SIZE_LINE / 2), this.SIZE_LINE, this.SIZE_LINE);
+                this.context.beginPath();
+                this.context.moveTo(this.prevMouseX, this.prevMouseY);
+                this.context.lineTo(this.prevMouseX+1, this.prevMouseY+1);
+                this.context.stroke();
+                // this.context.arc(this.prevMouseX, this.prevMouseY , this.SIZE_LINE, 0, 2 * Math.PI, true);
                 break;
             case "full_clear":
                 this.fullClear(event)
@@ -86,6 +97,8 @@ class ToolsDraw{
         this.context.putImageData(this.snapshot, 0, 0)
         switch (choice) {
             case "draw":
+                this.context.lineCap = "round"
+                this.context.lineJoin = "round"
                 this.context.lineTo(event.offsetX, event.offsetY)
                 this.context.stroke()
                 break;

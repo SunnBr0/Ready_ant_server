@@ -1,7 +1,7 @@
 let size_line_draw = document.getElementById("size_line")
 let color_line = document.getElementById("color_line")
 let choice_color = document.getElementById("choice_color")
-let SIZE_LINE;
+let SIZE_LINE =3;
 let COLOR_CURENT;
 // let item_color = document.getElementsByClassName("color_item")
 // let bgColor = window.getComputedStyle(document.getElementsByClassName('color_item')[0]).getPropertyValue('background-color');
