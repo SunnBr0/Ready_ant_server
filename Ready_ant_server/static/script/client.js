@@ -1,4 +1,3 @@
-// import{drawAnt} from "./draw_cansvas/draw.js"
 import { drawAnt } from "../script/draw_cansvas/draw.js"
 
 const channel = geckos({ port: 3000 })

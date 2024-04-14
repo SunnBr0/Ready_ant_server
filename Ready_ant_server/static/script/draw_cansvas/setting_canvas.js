@@ -10,13 +10,9 @@ ctx.strokeStyle  = "black";
 ctx.lineWidth = 1 
 ctx.fillStyle = "black";
 function anotherFigure(x,y,angle_radian,type){
-    // let angleInRadians = angle_radian * Math.PI/180    // ctx.translate(x_center,y_center)
     ctx.translate(x, y);
     ctx.rotate(angle_radian)
-    // ctx.scale(5,5)
     ctx.fill(type)
-    // ctx.lineWidth = 0.1
-    // ctx.stroke(type)
     ctx.resetTransform();
 }
 
