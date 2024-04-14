@@ -1,47 +1,14 @@
-# Ready_ant_server
+# Дипломная работа 
 
-Графический движок "UDP"
+Движется к завершению
+    
+Симуляция муравьёв
 
-Происходит взаимодействие движка Rust с JS
+Стэк: Node js,Js,Rust,Postgres,Docker ....
 
-Создатель Rust движка: https://github.com/BogusKladik
-# Демонстрация
-![using a color picker](work_rust.gif)
-# Установка
-
-Зашли в любую папку и пишем:
-
-```shell
-git clone https://github.com/SunnBr0/Ready_ant_server
-```
-
-и после вводим
-
-```shell
-npm install 
-```
-
-чтобы скачать все зависимости
-
-## Запуск
-
-переходим в каталог
-
-```shell
-cd Ready_ant_server
-```
-
-Запуск симмуляции с помощью движка Rust
-
-```shell
-npm start
-```
-
-Запуск симмуляции с помощью движка JS,который был пока не появился Rust.
-
-```
-npm run prob
-```
-
-Следующий шаг - переходим в браузер и вбиваем "http://localhost:8080/"
-и се ,чудо запустилось
+Участники:
+* Backend сайта : [Владимир](https://github.com/SunnBr0)
+* Frontend сайт : [Максим](https://github.com/MaxLime555)
+* Дизайнер : [Роман](https://github.com/SayM0Re)
+* Backend баз данных : [Дмитрий](https://github.com/Shin0kari)
+* Backend игрового движка: [Владислав](https://github.com/BogusKladik)

@@ -1,0 +1,21 @@
+{
+  "name": "ant_engine_svg",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prob": "node ./server/server.mjs -js -server",
+    "probFile": "node ./server/server.mjs -js -file",
+    "start": "node ./server/server.mjs -rust -server| cargo run --manifest-path ../Antgine/Cargo.toml ",
+    "startFile": "node ./server/server.mjs -rust -file| cargo run --manifest-path ../Antgine/Cargo.toml "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@geckos.io/client": "^2.3.0",
+    "@geckos.io/server": "^2.3.0",
+    "express": "^4.18.1"
+  }
+}
