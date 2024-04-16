@@ -12,7 +12,7 @@ channel.onConnect(error => {
     try {
       //присылается сразу json и его распарсиваем
       drawAnt(data)
-
+      console.log("dasd");
     } catch {
     }
   })

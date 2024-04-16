@@ -8,8 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prob": "node ./server/server.mjs -js -server",
     "probFile": "node ./server/server.mjs -js -file",
-    "start": "node ./server/server.mjs -rust -server| cargo run --manifest-path ../Antgine/Cargo.toml ",
-    "startFile": "node ./server/server.mjs -rust -file| cargo run --manifest-path ../Antgine/Cargo.toml "
+    "start": "node ./server/server.mjs -rust -server | cargo run --manifest-path ../Antgine/Cargo.toml",
+    "startFile": "node ./server/server.mjs -rust -file | cargo run --manifest-path ../Antgine/Cargo.toml"
   },
   "author": "",
   "license": "ISC",

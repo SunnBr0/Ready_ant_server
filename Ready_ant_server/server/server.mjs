@@ -71,7 +71,7 @@ io.onConnection(channel => {
     }
 
 
-  }, 50)
+  }, 16)
 
   channel.on('cash_html', (data) => {
     write_for_cash("/ant_basic/text.txt", data)
