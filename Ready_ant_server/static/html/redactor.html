@@ -126,7 +126,9 @@
 
 
     <div id="map">
-      <canvas id="draw_map" width="400" height="400"></canvas>
+      <canvas class="list_layer_map" id="draw_map" width="400" height="400" style="z-index: 0;"></canvas>
+      <!-- <canvas class="list_layer_map"  width="200" height="200" style="z-index: 1;"></canvas> -->
+      <!-- <canvas class="list_layer_map" id="draw_map" width="300" height="300" style="z-index: 2;position: absolute;left: 38px"></canvas> -->
     </div>
 
 
@@ -143,7 +145,7 @@
             </button>
           </li>
           <li>
-            <button class="image-button" value="full_clear">
+            <button class="image-button" value="minus_layer">
               <img src="../img/img_redactor/sparkles.png" alt="Иконка" width="20" height="20">
             </button>
           </li>

@@ -91,10 +91,10 @@ class ToolsDraw{
         this.snapshot = this.context.getImageData(0, 0, this.context.canvas.width, this.context.canvas.height)
         console.log("d");
     }
-    draw(event, choice) {
+    draw(event) {
         if (!this.is_drawing) return
         this.context.putImageData(this.snapshot, 0, 0)
-        switch (choice) {
+        switch (this.choice) {
             case "draw":
                 this.context.lineCap = "round"
                 this.context.lineJoin = "round"

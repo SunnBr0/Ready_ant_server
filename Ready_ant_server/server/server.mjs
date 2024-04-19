@@ -69,7 +69,7 @@ io.onConnection(channel => {
         straightRustDataOnJs(io, channel, onServerDataAnt)
       }
     }
-
+    
 
   }, 16)
 

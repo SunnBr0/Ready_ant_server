@@ -74,6 +74,7 @@
 }
 
 .type_item_tools{
+  z-index: 99;
   position: absolute;
   /* display: inline-block; */
   display: none;

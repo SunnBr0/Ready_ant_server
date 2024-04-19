@@ -1,23 +1,33 @@
 import { ToolsDraw } from "./tools.js"
-import { draw_point_linear } from "./function_draw.js"
 
 import { COLOR_CURENT, SIZE_LINE } from "./options_draw.js"
+let list_layer_map = document.getElementsByClassName("list_layer_map")
 let draw_map = document.getElementById('draw_map')
 let button_tools_draw = document.getElementsByClassName("image-button")
 let draw_instruments = document.getElementById("draw_instruments")
-let context = draw_map.getContext('2d');
+let layer_list = document.getElementById("layer_list")
+
+// let context = draw_map.getContext('2d');
+let arrayLayer = []
+let layer = list_layer_map[0]
+let context = layer.getContext('2d');
 console.dir(draw_instruments);
-
 let Tools_draw = new ToolsDraw(context)
+console.dir(list_layer_map);
+Tools_draw.setColorCurent(COLOR_CURENT)
+Tools_draw.setSizeLine(SIZE_LINE)
 
-let choice = null
-draw_map.addEventListener("mousedown", (event) => Tools_draw.start(event,COLOR_CURENT,SIZE_LINE), false)
-draw_map.addEventListener("mousemove", (event) => Tools_draw.draw(event, choice), false)
-draw_map.addEventListener("mouseup", (event) =>Tools_draw.stop(event), false)
-draw_map.addEventListener("mouseout", (event) =>Tools_draw.stop(event), false)
+var choice = null
+layer.addEventListener("mousedown", (event) => Tools_draw.start(event,COLOR_CURENT,SIZE_LINE), false)
+layer.addEventListener("mousemove", (event) => Tools_draw.draw(event), false)
+layer.addEventListener("mouseup", (event) =>Tools_draw.stop(event), false)
+layer.addEventListener("mouseout", (event) =>Tools_draw.stop(event), false)
+
 
 draw_instruments.addEventListener("click", (event) => {
+    
     choice = event.target.closest("button").value
+    console.dir(list_layer_map);
     Tools_draw.setChoice(choice)
     if (choice === "full_clear") {
         Tools_draw.fullClear(event)
@@ -36,3 +46,27 @@ draw_instruments.addEventListener("click", (event) => {
 
 
 
+// layer_list.addEventListener("click",(event)=>{
+// let Tools_draw1 = new ToolsDraw(list_layer_map[0].getContext('2d'))
+// console.dir(list_layer_map);
+// Tools_draw1.setChoice(choice)
+// console.log("###### ",choice);
+// list_layer_map[0].addEventListener("mousedown", (event) => Tools_draw1.start(event,COLOR_CURENT,SIZE_LINE), false)
+// list_layer_map[0].addEventListener("mousemove", (event) => Tools_draw1.draw(event), false)
+// list_layer_map[0].addEventListener("mouseup", (event) =>Tools_draw1.stop(event), false)
+// list_layer_map[0].addEventListener("mouseout", (event) =>Tools_draw1.stop(event), false)
+//   })
+
+// function updateLayerUse(){
+//     console.dir(list_layer_map);
+// Tools_draw.setChoice(choice)
+// console.log("###### ",choice);
+// list_layer_map[0].addEventListener("mousedown", (event) => Tools_draw.start(event,COLOR_CURENT,SIZE_LINE), false)
+// list_layer_map[0].addEventListener("mousemove", (event) => Tools_draw.draw(event), false)
+// list_layer_map[0].addEventListener("mouseup", (event) =>Tools_draw.stop(event), false)
+// list_layer_map[0].addEventListener("mouseout", (event) =>Tools_draw.stop(event), false)
+// }
+
+export {
+    choice
+}
