@@ -13,8 +13,9 @@ class ToolsDraw{
     choice
     COLOR_CURENT
     ant_base_paht
-    constructor(context){
+    constructor(context,choice){
         this.context = context
+        this.choice = choice
     }
 
     setChoice(choice){

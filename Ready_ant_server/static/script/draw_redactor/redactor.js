@@ -15,13 +15,15 @@ console.log("$$$$ ",redactor_map_main);
 // let context = draw_map.getContext('2d');
 let layer = list_layer_map[0]
 let context = layer.getContext('2d');
-let Tools_draw = new ToolsDraw(context)
+var Tools_draw = new ToolsDraw(context,null)
 console.dir(list_layer_map);
 console.dir(draw_instruments);
 // Tools_draw.setColorCurent(COLOR_CURENT)
 // Tools_draw.setSizeLine(SIZE_LINE)
 
 var choice = null
+var choiceDraw = null
+var choiceLayer = null
 // layer.addEventListener("mousedown", (event) => Tools_draw.start(event,COLOR_CURENT,SIZE_LINE), false)
 // layer.addEventListener("mousemove", (event) => Tools_draw.draw(event), false)
 // layer.addEventListener("mouseup", (event) =>Tools_draw.stop(event), false)
@@ -52,12 +54,42 @@ var choice = null
 
 redactor_map_main.addEventListener("click",(event)=>{
     console.log(event.target);
-    layer = list_layer_map[0]
-    context = layer.getContext('2d');
-    Tools_draw = new ToolsDraw(context)
-    choice = event.target.closest("button").value
-    console.log(event.target.class);
-    console.dir(list_layer_map);
+    
+    // Tools_draw = new ToolsDraw(context)
+    let mainCurrent =  event.target
+    console.log("####  ",mainCurrent);
+    choice = mainCurrent.closest("button").value
+    try {
+        if ( mainCurrent.closest("#panel_layer button").value != null) {
+            choice = mainCurrent.closest("#panel_layer button").value
+        }else if (mainCurrent.closest("#draw_instruments button").value != null) {
+            choice = mainCurrent.closest("#draw_instruments button").value
+            
+        }else{
+            choice = null
+        }
+        console.log("####  ",choice);
+        // console.log("####  ",choiceLayer);
+    } catch (e) {
+        
+    }
+    // console.log("####  ",event.target.className);
+    // console.log("####  ",event.target.classList);
+    // console.log("####  ",event.target.getAttribute("class"));
+    // try {
+    //     console.log("####  ",event.target.closest("#draw_instruments button").value);
+    //     if(event.target.closest("#draw_instruments button").value != null){
+    //         Tools_draw.setChoice(event.target.closest("#draw_instruments button").value != null)
+    //     }
+    // } catch (error) {
+        
+    // }
+    // console.log("####  ",event.target.closest("#draw_instruments button"));
+    // console.log("####  ",event.target.closest("button"));
+    // console.dir(list_layer_map);
+    // if(event.target.closest("#draw_instruments button").value != null){
+    //     Tools_draw.setChoice(choice)
+    // }
     Tools_draw.setChoice(choice)
     if (choice === "full_clear") {
         Tools_draw.fullClear(event)
@@ -71,19 +103,24 @@ redactor_map_main.addEventListener("click",(event)=>{
         }
     }else if(choice === "add_layer"){
         layer_list.insertAdjacentHTML("afterbegin", layerBlock(layer_list.children.length))
-      map.insertAdjacentHTML("afterbegin", canvasRedactor(layer_list.children.length))
+        map.insertAdjacentHTML("afterbegin", canvasRedactor(layer_list.children.length))
+        // layer = list_layer_map[0]
+        // context = layer.getContext('2d');
+        layer = list_layer_map[0]
+    context = layer.getContext('2d');
+        Tools_draw = new ToolsDraw(context,choice)
     }else if(choice === "minus_layer"){
         layer_list.children[0].remove()
       map.children[0].remove()
     }
-    console.log(choice);
+    console.log("####  ",choice);
     console.dir(layer_list.children.length);
-
+    layer.addEventListener("mousedown", (event) => Tools_draw.start(event,COLOR_CURENT,SIZE_LINE), false)
+    layer.addEventListener("mousemove", (event) => Tools_draw.draw(event), false)
+    layer.addEventListener("mouseup", (event) =>Tools_draw.stop(event), false)
+    layer.addEventListener("mouseout", (event) =>Tools_draw.stop(event), false)
 })
-layer.addEventListener("mousedown", (event) => Tools_draw.start(event,COLOR_CURENT,SIZE_LINE), false)
-layer.addEventListener("mousemove", (event) => Tools_draw.draw(event), false)
-layer.addEventListener("mouseup", (event) =>Tools_draw.stop(event), false)
-layer.addEventListener("mouseout", (event) =>Tools_draw.stop(event), false)
+
 // layer_list.addEventListener("click",(event)=>{
 // let Tools_draw1 = new ToolsDraw(list_layer_map[0].getContext('2d'))
 // console.dir(list_layer_map);
