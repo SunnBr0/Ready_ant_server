@@ -8,7 +8,7 @@ let choiceLayer = null
 let list_layer_map = document.getElementsByClassName("list_layer_map")
 
 
-function layer(number) {
+function layerBlock(number) {
   return `<li>
     <div class="layer_container_item">
       <button class="image-button" value="visible">
@@ -22,22 +22,22 @@ function canvasRedactor(number) {
   return `<canvas class="list_layer_map" id="draw_map" width="200" height="400" style="z-index: ${number};position: absolute;left: 38px"></canvas>`
 }
 {/* <canvas class="list_layer_map" id="draw_map" width="200" height="200" style="z-index: 2;position: absolute;left: 38px"></canvas> */ }
-console.log(layer_list);
+// console.log(layer_list);
 
-layer_instruments.addEventListener("click", (event) => {
-  choiceLayer = event.target.closest("button").value
+// layer_instruments.addEventListener("click", (event) => {
+//   choiceLayer = event.target.closest("button").value
 
-  if (choiceLayer === "add_layer") {
-    layer_list.insertAdjacentHTML("afterbegin", layer(layer_list.children.length))
-    map.insertAdjacentHTML("afterbegin", canvasRedactor(layer_list.children.length))
-  }
-  if (choiceLayer === "minus_layer") {
-    layer_list.children[0].remove()
-    map.children[0].remove()
-  }
-  console.dir(layer_list.children.length);
+//   if (choiceLayer === "add_layer") {
+//     layer_list.insertAdjacentHTML("afterbegin", layer(layer_list.children.length))
+//     map.insertAdjacentHTML("afterbegin", canvasRedactor(layer_list.children.length))
+//   }
+//   if (choiceLayer === "minus_layer") {
+//     layer_list.children[0].remove()
+//     map.children[0].remove()
+//   }
+//   console.dir(layer_list.children.length);
 
-})
+// })
 
 
 // layer_list.addEventListener("click",(event)=>{
@@ -49,3 +49,7 @@ layer_instruments.addEventListener("click", (event) => {
 // list_layer_map[0].addEventListener("mouseup", (event) =>Tools_draw.stop(event), false)
 // list_layer_map[0].addEventListener("mouseout", (event) =>Tools_draw.stop(event), false)
 // })
+export{
+  layerBlock,
+  canvasRedactor
+}

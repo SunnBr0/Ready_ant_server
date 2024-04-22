@@ -20,102 +20,102 @@
 </head>
 
 <body>
+  <div id="redactor_map_main">
+    <div id="options_draw">
+      <input type="range" min="3" max="50" id="size_line">
+      <input type="color" id="color_line">
+      <ul id="choice_color">
+        <li class="color_item"></li>
+        <li class="color_item"></li>
+        <li class="color_item"></li>
+        <li class="color_item"></li>
+        <li class="color_item"></li>
+      </ul>
+    </div>
+    <div id="main_window">
 
-  <div id="options_draw">
-    <input type="range" min="3" max="50" id="size_line">
-    <input type="color" id="color_line">
-    <ul id="choice_color">
-      <li class="color_item"></li>
-      <li class="color_item"></li>
-      <li class="color_item"></li>
-      <li class="color_item"></li>
-      <li class="color_item"></li>
-    </ul>
-  </div>
-  <div id="main_window">
-
-    <!-- https://domikdomovenka.ru/products/ierarhiya-muravev ВСЁ Об МУРАВЬЁВ -->
-    <ul id="draw_instruments">
-      <li>
-        <button class="image-button" value="draw">
-          <img src="../img/img_redactor/brush.png" alt="Иконка" width="20" height="20">
-        </button>
-      </li>
-      <li>
-        <button class="image-button" value="clear">
-          <img src="../img/img_redactor/eraser.png" alt="Иконка" width="20" height="20">
-        </button>
-      </li>
-      <li>
-        <button class="image-button" value="type_ant">
-          <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
-        </button>
-        <div class="type_item_tools">
-          <button class="image-button" value="RAbota_ant">
-            <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+      <!-- https://domikdomovenka.ru/products/ierarhiya-muravev ВСЁ Об МУРАВЬЁВ -->
+      <ul id="draw_instruments">
+        <li>
+          <button class="image-button" value="draw">
+            <img src="../img/img_redactor/brush.png" alt="Иконка" width="20" height="20">
           </button>
-          <button class="image-button" value="mama_ant">
-            <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+        </li>
+        <li>
+          <button class="image-button" value="clear">
+            <img src="../img/img_redactor/eraser.png" alt="Иконка" width="20" height="20">
           </button>
-          <button class="image-button" value="soldat_ant">
-            <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
-          </button>
-        </div>
-      </li>
-      <li>
-        <button class="image-button" value="selecting">
-          <img src="../img/img_redactor/border-outer.png" alt="Иконка" width="20" height="20">
-        </button>
-      </li>
-      <li>
-        <button class="image-button" value="find_color">
-          <img src="../img/img_redactor/eyedropper.png" alt="Иконка" width="20" height="20">
-        </button>
-      </li>
-      <li>
-        <button class="image-button" value="move_map">
-          <img src="../img/img_redactor/hand-index-thumb.png" alt="Иконка" width="20" height="20">
-        </button>
-      </li>
-      <li>
-        <button class="image-button" value="full_color">
-          <img src="../img/img_redactor/bucket.png" alt="Иконка" width="20" height="20">
-        </button>
-      </li>
-      <li>
-        <button class="image-button" value="zoom">
-          <img src="../img/img_redactor/search.png" alt="Иконка" width="20" height="20">
-        </button>
-      </li>
-      <li>
-        <button class="image-button" value="figure">
-          <img src="../img/img_redactor/square-3-stack-3d.png" alt="Иконка" width="20" height="20">
-        </button>
-      </li>
-      <li>
-        <button class="image-button" value="full_clear">
-          <img src="../img/img_redactor/sparkles.png" alt="Иконка" width="20" height="20">
-        </button>
-      </li>
-    </ul>
-
-
-    <!-- <div>
+        </li>
+        <li>
           <button class="image-button" value="type_ant">
             <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
           </button>
           <div class="type_item_tools">
-            <button class="image-button" value="type_ant">
+            <button class="image-button" value="RAbota_ant">
               <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
             </button>
-            <button class="image-button" value="type_ant">
+            <button class="image-button" value="mama_ant">
               <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
             </button>
-            <button class="image-button" value="type_ant">
+            <button class="image-button" value="soldat_ant">
               <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
             </button>
           </div>
-        </div> -->
+        </li>
+        <li>
+          <button class="image-button" value="selecting">
+            <img src="../img/img_redactor/border-outer.png" alt="Иконка" width="20" height="20">
+          </button>
+        </li>
+        <li>
+          <button class="image-button" value="find_color">
+            <img src="../img/img_redactor/eyedropper.png" alt="Иконка" width="20" height="20">
+          </button>
+        </li>
+        <li>
+          <button class="image-button" value="move_map">
+            <img src="../img/img_redactor/hand-index-thumb.png" alt="Иконка" width="20" height="20">
+          </button>
+        </li>
+        <li>
+          <button class="image-button" value="full_color">
+            <img src="../img/img_redactor/bucket.png" alt="Иконка" width="20" height="20">
+          </button>
+        </li>
+        <li>
+          <button class="image-button" value="zoom">
+            <img src="../img/img_redactor/search.png" alt="Иконка" width="20" height="20">
+          </button>
+        </li>
+        <li>
+          <button class="image-button" value="figure">
+            <img src="../img/img_redactor/square-3-stack-3d.png" alt="Иконка" width="20" height="20">
+          </button>
+        </li>
+        <li>
+          <button class="image-button" value="full_clear">
+            <img src="../img/img_redactor/sparkles.png" alt="Иконка" width="20" height="20">
+          </button>
+        </li>
+      </ul>
+
+
+      <!-- <div>
+            <button class="image-button" value="type_ant">
+              <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+            </button>
+            <div class="type_item_tools">
+              <button class="image-button" value="type_ant">
+                <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+              </button>
+              <button class="image-button" value="type_ant">
+                <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+              </button>
+              <button class="image-button" value="type_ant">
+                <img src="../img/logo.webp" alt="Иконка" width="20" height="20">
+              </button>
+            </div>
+          </div> -->
 
 
 
@@ -125,40 +125,36 @@
 
 
 
-    <div id="map">
-      <canvas class="list_layer_map" id="draw_map" width="400" height="400" style="z-index: 0;"></canvas>
-      <!-- <canvas class="list_layer_map"  width="200" height="200" style="z-index: 1;"></canvas> -->
-      <!-- <canvas class="list_layer_map" id="draw_map" width="300" height="300" style="z-index: 2;position: absolute;left: 38px"></canvas> -->
+      <div id="map">
+        <canvas class="list_layer_map" id="draw_map" width="400" height="400" style="z-index: 0;"></canvas>
+        <!-- <canvas class="list_layer_map"  width="200" height="200" style="z-index: 1;"></canvas> -->
+        <!-- <canvas class="list_layer_map" id="draw_map" width="300" height="300" style="z-index: 2;position: absolute;left: 38px"></canvas> -->
+      </div>
+
+
+      <ul id="panel_layer">
+        <li>
+          <ul id="layer_list">
+          </ul>
+        </li>
+        <li>
+          <ul id="layer_instruments">
+            <li>
+              <button class="image-button" value="add_layer">
+                <img src="../img/img_redactor/sparkles.png" alt="Иконка" width="20" height="20">
+              </button>
+            </li>
+            <li>
+              <button class="image-button" value="minus_layer">
+                <img src="../img/img_redactor/sparkles.png" alt="Иконка" width="20" height="20">
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
-
-
-    <ul id="panel_layer">
-      <li>
-        <ul id="layer_list">
-        </ul>
-      </li>
-      <li>
-        <ul id="layer_instruments">
-          <li>
-            <button class="image-button" value="add_layer">
-              <img src="../img/img_redactor/sparkles.png" alt="Иконка" width="20" height="20">
-            </button>
-          </li>
-          <li>
-            <button class="image-button" value="minus_layer">
-              <img src="../img/img_redactor/sparkles.png" alt="Иконка" width="20" height="20">
-            </button>
-          </li>
-        </ul>
-      </li>
-    </ul>
-
-
-
-
-
-
   </div>
+
 
 </body>
 <script type="module" src="../script/draw_redactor/options_draw.js"></script>
