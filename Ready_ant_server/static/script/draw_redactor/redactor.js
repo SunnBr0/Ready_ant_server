@@ -21,9 +21,10 @@ console.dir(draw_instruments);
 // Tools_draw.setColorCurent(COLOR_CURENT)
 // Tools_draw.setSizeLine(SIZE_LINE)
 
-var choice = null
+let choice = null
 var choiceDraw = null
 var choiceLayer = null
+let currentTools = null
 // layer.addEventListener("mousedown", (event) => Tools_draw.start(event,COLOR_CURENT,SIZE_LINE), false)
 // layer.addEventListener("mousemove", (event) => Tools_draw.draw(event), false)
 // layer.addEventListener("mouseup", (event) =>Tools_draw.stop(event), false)
@@ -54,21 +55,23 @@ var choiceLayer = null
 
 redactor_map_main.addEventListener("click",(event)=>{
     console.log(event.target);
-    
-    // Tools_draw = new ToolsDraw(context)
+    layer = list_layer_map[0]
+
+    context = layer.getContext('2d');
+    Tools_draw = new ToolsDraw(context)
     let mainCurrent =  event.target
     console.log("####  ",mainCurrent);
-    choice = mainCurrent.closest("button").value
     try {
-        if ( mainCurrent.closest("#panel_layer button").value != null) {
-            choice = mainCurrent.closest("#panel_layer button").value
-        }else if (mainCurrent.closest("#draw_instruments button").value != null) {
-            choice = mainCurrent.closest("#draw_instruments button").value
+    choice = mainCurrent.closest("button").value
+    currentTools = choice
+        // if ( mainCurrent.closest("#panel_layer button").value != null) {
+        //     choice = mainCurrent.closest("#panel_layer button").value
+        // }else if (mainCurrent.closest("#draw_instruments button").value != null) {
+        //     choice = mainCurrent.closest("#draw_instruments button").value
             
-        }else{
-            choice = null
-        }
-        console.log("####  ",choice);
+        // }else{
+        //     choice = null
+        // }
         // console.log("####  ",choiceLayer);
     } catch (e) {
         
@@ -91,6 +94,8 @@ redactor_map_main.addEventListener("click",(event)=>{
     //     Tools_draw.setChoice(choice)
     // }
     Tools_draw.setChoice(choice)
+    console.log("####  ",choice);
+
     if (choice === "full_clear") {
         Tools_draw.fullClear(event)
         //условие переписать учитывая value кнопок)
@@ -101,7 +106,8 @@ redactor_map_main.addEventListener("click",(event)=>{
         } else {
             type_ant[0].style.display = "inline-block"
         }
-    }else if(choice === "add_layer"){
+    }
+    if(choice === "add_layer"){
         layer_list.insertAdjacentHTML("afterbegin", layerBlock(layer_list.children.length))
         map.insertAdjacentHTML("afterbegin", canvasRedactor(layer_list.children.length))
         // layer = list_layer_map[0]
@@ -109,16 +115,22 @@ redactor_map_main.addEventListener("click",(event)=>{
         layer = list_layer_map[0]
     context = layer.getContext('2d');
         Tools_draw = new ToolsDraw(context,choice)
+        choice = null
     }else if(choice === "minus_layer"){
         layer_list.children[0].remove()
       map.children[0].remove()
+      layer = list_layer_map[0]
+      choice = null
+      
     }
-    console.log("####  ",choice);
+    // console.log("####  ",choice);
     console.dir(layer_list.children.length);
     layer.addEventListener("mousedown", (event) => Tools_draw.start(event,COLOR_CURENT,SIZE_LINE), false)
     layer.addEventListener("mousemove", (event) => Tools_draw.draw(event), false)
     layer.addEventListener("mouseup", (event) =>Tools_draw.stop(event), false)
     layer.addEventListener("mouseout", (event) =>Tools_draw.stop(event), false)
+    
+
 })
 
 // layer_list.addEventListener("click",(event)=>{
