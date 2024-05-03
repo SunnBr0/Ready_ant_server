@@ -2,7 +2,6 @@ import { drawAnt } from "../script/draw_cansvas/draw.js"
 
 const channel = geckos({ port: 3000 })
 
-
 channel.onConnect(error => {
   if (error) {
     return error.message
@@ -11,12 +10,14 @@ channel.onConnect(error => {
 
     try {
       //присылается сразу json и его распарсиваем
-      drawAnt(data)
+      requestAnimationFrame(drawAnt(data))
+      
+
+      // drawAnt(data)
       console.log("dasd");
     } catch {
     }
   })
-
 })
 
 channel.onDisconnect(err => {

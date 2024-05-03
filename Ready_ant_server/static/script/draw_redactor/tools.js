@@ -81,6 +81,16 @@ class ToolsDraw{
                 this.context.stroke();
                 // this.context.arc(this.prevMouseX, this.prevMouseY , this.SIZE_LINE, 0, 2 * Math.PI, true);
                 break;
+            case "full_color":
+                this.context.lineCap = "round"
+                this.context.lineJoin = "round"
+                // this.context.fillRect(this.prevMouseX - Math.round(this.SIZE_LINE / 2), this.prevMouseY - Math.round(this.SIZE_LINE / 2), this.SIZE_LINE, this.SIZE_LINE);
+                // this.context.fillRect(this.prevMouseX - Math.round(this.SIZE_LINE / 2), this.prevMouseY - Math.round(this.SIZE_LINE / 2), this.SIZE_LINE, this.SIZE_LINE);
+                this.context.moveTo(this.prevMouseX, this.prevMouseY);
+                this.context.lineTo(this.prevMouseX+10, this.prevMouseY+14);
+                this.context.stroke();
+                // this.context.arc(this.prevMouseX, this.prevMouseY , this.SIZE_LINE, 0, 2 * Math.PI, true);
+                break;    
             case "full_clear":
                 this.fullClear(event)
                 break;
@@ -110,6 +120,12 @@ class ToolsDraw{
             case "figure":
                 this.drawRect(event)
                 break;
+            case "full_color":
+                this.context.lineCap = "round"
+                this.context.lineJoin = "round"
+                this.context.lineTo(event.offsetX, event.offsetY)
+                this.context.stroke()
+                break;      
             case "full_clear":
                 this.fullClear(event)
                 break;
