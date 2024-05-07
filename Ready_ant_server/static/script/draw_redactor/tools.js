@@ -16,7 +16,7 @@ class ToolsDraw {
 
 
 
-    
+
     constructor(context, choice) {
         this.context = context
         this.choice = choice
@@ -39,18 +39,59 @@ class ToolsDraw {
             }
         }
     }
-    drawHexagon( x, y, fill) {
-        var fill = fill || false;
-        this.context.beginPath();
+    drawHexagon(fill) {
+        let fillFlag = fill || false;
+        let hexagonAngle = Math.PI / 6 // 30 градусов в радианах
+        let sideLength = 32 // длина стороны, в пикселях
+        let hexHeight = Math.sin(hexagonAngle) * sideLength;
+        let hexRadius = Math.cos(hexagonAngle) * sideLength;
+        let hexRectangleHeight = sideLength + 2 * hexHeight;
+        let hexRectangleWidth = 2 * hexRadius;
+        let hexY = Math.floor(this.prevMouseY / (hexHeight + sideLength));
+        let hexX = Math.floor((this.prevMouseX - (hexY % 2) * hexRadius) / hexRectangleWidth);
+        let x = hexX * hexRectangleWidth + ((hexY % 2) * hexRadius);
+        let y = hexY * (hexHeight + sideLength);
         this.context.moveTo(x + hexRadius, y);
         this.context.lineTo(x + hexRectangleWidth, y + hexHeight);
         this.context.lineTo(x + hexRectangleWidth, y + hexHeight + sideLength);
         this.context.lineTo(x + hexRadius, y + hexRectangleHeight);
         this.context.lineTo(x, y + sideLength + hexHeight);
         this.context.lineTo(x, y + hexHeight);
-        this.context.closePath();
-        if (fill) this.context.fill();
+        if (fillFlag) this.context.fill();
         else this.context.stroke();
+        //     console.log("##############################################");
+        //     let hexagonAngle = Math.PI / 6 // 30 градусов в радианах
+        //     let sideLength = 32 // длина стороны, в пикселях
+        //     // boardWidth = 100, // ширина "доски" по вертикали
+        //     // boardHeight = 100, // высота "доски" по вертикали
+
+        //     let hexHeight = Math.sin(hexagonAngle) * sideLength;
+        //     let hexRadius = Math.cos(hexagonAngle) * sideLength;
+        //     let hexRectangleHeight = sideLength + 2 * hexHeight;
+        //     let hexRectangleWidth = 2 * hexRadius;
+        //     let hexY = Math.floor(this.prevMouseY / (hexHeight + sideLength));
+        //     let hexX = Math.floor((this.prevMouseX - (hexY % 2) * hexRadius) / hexRectangleWidth);
+        //     let x = hexX * hexRectangleWidth + ((hexY % 2) * hexRadius);
+        //     let y = hexY * (hexHeight + sideLength);
+        //     // console.log("hexX: ", hexX);
+        //     // console.log("hexY: ", hexY);
+        //     // console.log("screenX: ", screenX);
+        //     // console.log("screenY: ", screenY);
+        //     // console.log("eventInfo.offsetX ", this.prevMouseX);
+        //     // console.log("eventInfo.offsetY ", this.prevMouseY);
+        //     // let centerX = x + hexRectangleWidth / 2;
+        //     // let centerY = y + hexRectangleHeight / 2;
+        //     // console.log("CenterX: ", Math.round(centerX), "CenterY:", centerY);
+        //     // var fill = fill || false;
+        //     this.context.moveTo(x + hexRadius, y);
+        //     this.context.lineTo(x + hexRectangleWidth, y + hexHeight);
+        //     this.context.lineTo(x + hexRectangleWidth, y + hexHeight + sideLength);
+        //     this.context.lineTo(x + hexRadius, y + hexRectangleHeight);
+        //     this.context.lineTo(x, y + sideLength + hexHeight);
+        //     this.context.lineTo(x, y + hexHeight);
+        //     this.context.fill();
+        // if (fill) this.context.fill();
+        // else this.context.stroke();
     }
     drawRect(event) {
         this.context.lineJoin = ""
@@ -106,21 +147,42 @@ class ToolsDraw {
                 // this.context.arc(this.prevMouseX, this.prevMouseY , this.SIZE_LINE, 0, 2 * Math.PI, true);
                 break;
             case "full_color":
-                var hexHeight,
-                    hexRadius,
-                    hexRectangleHeight,
-                    hexRectangleWidth,
-                    hexagonAngle = Math.PI / 6, // 30 градусов в радианах
-                    sideLength = 32, // длина стороны, в пикселях
-                    boardWidth = 100, // ширина "доски" по вертикали
-                    boardHeight = 100, // высота "доски" по вертикали
+                this.drawHexagon(true)
+                // let hexagonAngle = Math.PI / 6 // 30 градусов в радианах
+                // let sideLength = 32 // длина стороны, в пикселях
+                // let hexHeight = Math.sin(hexagonAngle) * sideLength;
+                // let hexRadius = Math.cos(hexagonAngle) * sideLength;
+                // let hexRectangleHeight = sideLength + 2 * hexHeight;
+                // let hexRectangleWidth = 2 * hexRadius;
+                // let hexY = Math.floor(this.prevMouseY / (hexHeight + sideLength));
+                // let hexX = Math.floor((this.prevMouseX - (hexY % 2) * hexRadius) / hexRectangleWidth);
+                // let x = hexX * hexRectangleWidth + ((hexY % 2) * hexRadius);
+                // let y = hexY * (hexHeight + sideLength);
+                // this.context.moveTo(x + hexRadius, y);
+                // this.context.lineTo(x + hexRectangleWidth, y + hexHeight);
+                // this.context.lineTo(x + hexRectangleWidth, y + hexHeight + sideLength);
+                // this.context.lineTo(x + hexRadius, y + hexRectangleHeight);
+                // this.context.lineTo(x, y + sideLength + hexHeight);
+                // this.context.lineTo(x, y + hexHeight);
+                // this.context.fill();
+                // this.context.closePath();
 
-                    hexHeight = Math.sin(hexagonAngle) * sideLength;
-                hexRadius = Math.cos(hexagonAngle) * sideLength;
-                hexRectangleHeight = sideLength + 2 * hexHeight;
-                hexRectangleWidth = 2 * hexRadius;
-                this.context.fillStyle = "green";
-                this.drawHexagon(this.context, screenX, screenY, true);
+                // this.drawHexagon(true);
+                // var hexHeight,
+                //     hexRadius,
+                //     hexRectangleHeight,
+                //     hexRectangleWidth,
+                //     hexagonAngle = Math.PI / 6, // 30 градусов в радианах
+                //     sideLength = 32, // длина стороны, в пикселях
+                //     boardWidth = 100, // ширина "доски" по вертикали
+                //     boardHeight = 100, // высота "доски" по вертикали
+
+                //     hexHeight = Math.sin(hexagonAngle) * sideLength;
+                // hexRadius = Math.cos(hexagonAngle) * sideLength;
+                // hexRectangleHeight = sideLength + 2 * hexHeight;
+                // hexRectangleWidth = 2 * hexRadius;
+                // this.context.fillStyle = "green";
+                // this.drawHexagon(this.context, screenX, screenY, true);
                 // var centerX = screenX + hexRectangleWidth / 2;
                 // var centerY = screenY + hexRectangleHeight / 2;
                 // console.log("CenterX: ", Math.round(centerX), "CenterY:", centerY);
@@ -157,10 +219,24 @@ class ToolsDraw {
                 this.drawRect(event)
                 break;
             case "full_color":
-                this.context.lineCap = "round"
-                this.context.lineJoin = "round"
-                this.context.lineTo(event.offsetX, event.offsetY)
-                this.context.stroke()
+                // let hexagonAngle = Math.PI / 6 // 30 градусов в радианах
+                // let sideLength = 32 // длина стороны, в пикселях
+                // let hexHeight = Math.sin(hexagonAngle) * sideLength;
+                // let hexRadius = Math.cos(hexagonAngle) * sideLength;
+                // let hexRectangleHeight = sideLength + 2 * hexHeight;
+                // let hexRectangleWidth = 2 * hexRadius;
+                // let hexY = Math.floor(event.offsetY / (hexHeight + sideLength));
+                // let hexX = Math.floor((event.offsetX - (hexY % 2) * hexRadius) / hexRectangleWidth);
+                // let x = hexX * hexRectangleWidth + ((hexY % 2) * hexRadius);
+                // let y = hexY * (hexHeight + sideLength);
+                // this.context.moveTo(x + hexRadius, y);
+                // this.context.lineTo(x + hexRectangleWidth, y + hexHeight);
+                // this.context.lineTo(x + hexRectangleWidth, y + hexHeight + sideLength);
+                // this.context.lineTo(x + hexRadius, y + hexRectangleHeight);
+                // this.context.lineTo(x, y + sideLength + hexHeight);
+                // this.context.lineTo(x, y + hexHeight);
+                // this.context.fill();
+                this.drawHexagon(true)
                 break;
             case "full_clear":
                 this.fullClear(event)
