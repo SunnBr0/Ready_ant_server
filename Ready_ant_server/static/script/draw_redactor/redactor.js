@@ -16,8 +16,8 @@ console.dir(list_layer_map[0]);
 let layer = draw_map
 let context = layer.getContext('2d');
 var Tools_draw = new ToolsDraw(context, null)
-let boardWidth = 100 // ширина "доски" по вертикали
-let boardHeight = 100 // высота "доски" по вертикали
+let boardWidth = 600// ширина "доски" по вертикали
+let boardHeight = 600 // высота "доски" по вертикали
 Tools_draw.drawBoard(boardWidth,boardHeight)
     console.dir(list_layer_map);
 console.dir(draw_instruments);
