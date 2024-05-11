@@ -1,5 +1,4 @@
 import { ToolsDraw } from "./tools.js"
-import { layerBlock, canvasRedactor } from "./layer_redactor.js"
 import { COLOR_CURENT, SIZE_LINE } from "./options_draw.js"
 let list_layer_map = document.getElementsByClassName("list_layer_map")
 let draw_map = document.getElementById('draw_map')
@@ -8,29 +7,32 @@ let draw_instruments = document.getElementById("draw_instruments")
 let layer_list = document.getElementById("layer_list")
 let redactor_map_main = document.getElementById("redactor_map_main")
 let map = document.getElementById("map")
+// URL сервера, на который отправляется запрос
+const url = 'http://localhost:8080/red';
 
-console.log("$$$$ ", redactor_map_main);
 
 
+let saveDataMap = null
+let flagSaveDataMap = false
 console.dir(list_layer_map[0]);
 let layer = draw_map
 let context = layer.getContext('2d');
 var Tools_draw = new ToolsDraw(context, null)
 let boardWidth = 600// ширина "доски" по вертикали
 let boardHeight = 600 // высота "доски" по вертикали
-Tools_draw.drawBoard(boardWidth,boardHeight)
-    console.dir(list_layer_map);
+Tools_draw.drawBoard(boardWidth, boardHeight)
+console.dir(list_layer_map);
 console.dir(draw_instruments);
-
-
+console.log("$$$$ ", redactor_map_main);
 let choice = null
 
 
 
 
 
-redactor_map_main.addEventListener("click", (event) => {
 
+
+redactor_map_main.addEventListener("click", (event) => {
     let mainCurrent = event.target
     console.log("####  ", mainCurrent);
     try {
@@ -39,7 +41,40 @@ redactor_map_main.addEventListener("click", (event) => {
     } catch (e) {
 
     }
+    if (choice == "save") {
+        saveDataMap = Tools_draw.getInfoCenterHex()
+        flagSaveDataMap = true
+        console.log(saveDataMap)
+        console.log("object");
+        // Настройки запроса
+        // let data = {
+        //     name: 'John',
+        //     age: 30
+        // };
+        let options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(saveDataMap)
+        };
+        // Отправка запроса
+        fetch(url, options)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Server response:', data);
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+            });
 
+    }
+    flagSaveDataMap = false
     Tools_draw.setChoice(choice)
     console.log("####  ", choice);
 
@@ -65,5 +100,7 @@ map.addEventListener("mouseout", (event) => Tools_draw.stop(event), false)
 
 
 export {
-    choice
+    choice,
+    saveDataMap,
+    flagSaveDataMap
 }

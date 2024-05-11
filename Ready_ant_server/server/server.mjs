@@ -1,5 +1,6 @@
 import express from 'express'
 import geckos from '@geckos.io/server'
+import bodyParser from "body-parser"
 import { straightRustDataOnJs } from "../generation_rs.js"
 import { cercitMove } from "../game_engine.js"
 import { full_path, dir_path_folder_test } from './path_name_dir.mjs'
@@ -10,6 +11,8 @@ import http from 'http'
 const app = express()
 const server = http.createServer(app)
 const io = geckos()
+// const urlencodedParser = express.urlencoded({extended: false});
+
 // Параметры для данных 
 //данные будут сразу идти на отображение в клиент в виде json,а false будет сохранять в папку
 let onServerDataAnt;
@@ -35,10 +38,10 @@ if(process.argv[3] === "-server"){
 console.log("JsEngineOrRustEngine: ",JsEngineOrRustEngine);
 console.log("onServerDataAnt: ",onServerDataAnt);
 app.use(express.static(full_path("/static")));
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
 io.addServer(server)
 io.listen(3000)
-
 
 function updateTime(channel) {
   read_json_url_path("/ant_basic/ant_rs.json")
@@ -71,7 +74,7 @@ io.onConnection(channel => {
     }
     
 
-  }, 16)
+  }, 32)
 
   channel.on('cash_html', (data) => {
     write_for_cash("/ant_basic/text.txt", data)
@@ -81,16 +84,26 @@ io.onConnection(channel => {
     console.log(`${channel.id} got disconnected`)
     clearInterval(interval);
   })
-
+  channel.on('saveMap', (data) => {
+    console.log(data);
+  })
 })
 
 
 app.get("/", (req, res) => {
   res.sendFile(full_path("/static/html/index.html"))
 })
-app.get("/red", (req, res) => {
+app.route("/red")
+  .get((req, res) => {
   res.sendFile(full_path("/static/html/redactor.html"))
 })
+  .post( (req, res)=> {
+  if(!req.body) return res.sendStatus(400);
+  console.log(req.body);
+  // Отправляем ответ клиенту
+  res.json({ status: 'success', message: 'Data received' });
+  // response.send(`${request.body.userName} - ${request.body.userAge}`);
+});
 server.listen(8080, () => {
   console.log("Server start....")
 })

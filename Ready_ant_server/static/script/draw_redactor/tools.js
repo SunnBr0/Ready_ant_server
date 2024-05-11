@@ -13,13 +13,17 @@ class ToolsDraw {
     choice
     COLOR_CURENT
     ant_base_paht
-
-
-
+    infoCenterHex
+    arrayCoordHex
+    radiusHex
 
     constructor(context, choice) {
         this.context = context
         this.choice = choice
+
+        this.infoCenterHex = new Set()
+        this.arrayCoordHex = new Array()
+        this.radiusHex = 50
     }
 
     setChoice(choice) {
@@ -30,6 +34,9 @@ class ToolsDraw {
     }
     setColorCurent(colorCurent) {
         this.COLOR_CURENT = colorCurent
+    }
+    getInfoCenterHex(){
+        return {"CoordsHex":this.arrayCoordHex,"RadiusOrLine":this.radiusHex}
     }
     drawBoard(width, height) {
         // let hexagonAngle = Math.PI / 6 // 30 градусов в радианах
@@ -48,7 +55,7 @@ class ToolsDraw {
         //         this.drawHexagon(false, i, j);
         //     }
         // }
-        const r = 25;
+        const r = this.radiusHex/2;
         for (let y = r; y + r * (Math.sqrt(3) / 2) < height; y += r * (Math.sqrt(3) / 2)) {
             for (let x = r, j = 0; x + r * (1 + 1 / 2) < width; x += r * (1 + 1 / 2), y += (-1) ** j++ * r * (Math.sqrt(3) / 2)) {
                 this.drawHexagonPol(x, y,r);
@@ -61,6 +68,7 @@ class ToolsDraw {
     drawHexagonPol(x, y,r) {
         const a = Math.PI / 3;
         // this.context.beginPath();
+        this.context.lineWidth = 1;
         this.context.moveTo(x + r, y);
         for (let i = 0; i < 6; i++) {
             this.context.lineTo(x + r * Math.cos(a * i), y + r * Math.sin(a * i));
@@ -72,7 +80,7 @@ class ToolsDraw {
         let fillFlag = fill || false;
         let x, y
         const a = Math.PI / 3;
-        const r = 25;
+        const r = this.radiusHex/2;
         const k = 3 / 4
         const rSmall = (Math.sqrt(3) / 2) * r
         const mouseX = this.prevMouseX;
@@ -82,13 +90,16 @@ class ToolsDraw {
 
 
         if (coordsX == null || coordsY == null) {
-
             y = closestY * (2 * rSmall) + ((rSmall) * (closestX % 2)) + r
             x = closestX * ((2 * r) * k) + r
         } else {
             this.context.beginPath();
             y = closestY * (2 * rSmall) + ((rSmall) * (closestX % 2)) + r
             x = closestX * ((2 * r) * k) + r
+        }
+
+        if (!this.arrayCoordHex.some(subArray => subArray[0] === [x,y][0] && subArray[1] === [x,y][1])) {
+            this.arrayCoordHex.push([x,y]);
         }
 
         this.drawHexagonPol(x, y,r)
