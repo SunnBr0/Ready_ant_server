@@ -93,6 +93,9 @@ io.onConnection(channel => {
 app.get("/", (req, res) => {
   res.sendFile(full_path("/static/html/index.html"))
 })
+app.get("/startGame",(req,res)=>{
+  res.sendFile(full_path("/static/html/startGame.html"))
+})
 app.route("/red")
   .get((req, res) => {
   res.sendFile(full_path("/static/html/redactor.html"))

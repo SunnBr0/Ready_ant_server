@@ -3,13 +3,15 @@ const canvas = document.getElementById('canvas');
 canvas.width = 1920
 canvas.height = 900
 const ctx = canvas.getContext('2d');
-canvas.style.backgroundColor = "yellow"
-document.body.appendChild(canvas);
+canvas.style.backgroundColor = "yellow";
+const main = document.querySelector("main");
+main.appendChild(canvas);
 
 ctx.strokeStyle  = "black";
 ctx.lineWidth = 1 
 ctx.fillStyle = "black";
-function anotherFigure(x,y,angle_radian,type){
+const anotherFigure = (x,y,angle_radian,type) =>{
+    // let angleInRadians = angle_radian * Math.PI/180    // ctx.translate(x_center,y_center)
     ctx.translate(x, y);
     ctx.rotate(angle_radian)
     ctx.fill(type)
@@ -17,7 +19,7 @@ function anotherFigure(x,y,angle_radian,type){
 }
 
 
-function drawFullCadrAnotherImage(obj_ant,type){
+const drawFullCadrAnotherImage = (obj_ant,type) => {
 
     let main_obj_ant = obj_ant.Ant
     let angle_ant = main_obj_ant.angle
