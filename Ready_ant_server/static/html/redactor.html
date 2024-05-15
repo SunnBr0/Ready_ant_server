@@ -21,7 +21,7 @@
 <body>
   <div id="redactor_map_main">
     <div id="options_draw">
-      <input type="range" min="3" max="50" id="size_line">
+      <input type="range" min="25" max="65" id="size_line">
       <input type="color" id="color_line">
       <ul id="choice_color">
         <li class="color_item"></li>
@@ -82,6 +82,21 @@
           </button>
         </li>
         <li>
+          <button class="image-button" value="hex_map">
+            <img src="../img/img_redactor/bucket.png" alt="Иконка" width="20" height="20">
+          </button>
+        </li>
+        <li>
+          <button class="image-button" value="kvad_map">
+            <img src="../img/img_redactor/bucket.png" alt="Иконка" width="20" height="20">
+          </button>
+        </li>
+        <li>
+          <button class="image-button" value="triangle_map">
+            <img src="../img/img_redactor/bucket.png" alt="Иконка" width="20" height="20">
+          </button>
+        </li>
+        <li>
           <button class="image-button" value="zoom">
             <img src="../img/img_redactor/search.png" alt="Иконка" width="20" height="20">
           </button>
@@ -125,7 +140,7 @@
 
 
       <div id="map">
-        <canvas class="list_layer_map" id="draw_map" width="400" height="400" style="z-index: 0;"></canvas>
+        <canvas class="list_layer_map" id="draw_map" width="800" height="800" style="z-index: 0;"></canvas>
       </div>
 
 

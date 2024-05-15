@@ -18,9 +18,9 @@
 //     </div>
 //     </li>`
 // }
-// function canvasRedactor(number) {
-//   return `<canvas class="list_layer_map" id="draw_map" width="200" height="400" style="z-index: ${number};position: absolute;left: 38px"></canvas>`
-// }
+function canvasRedactor(number,width,height) {
+  return `<canvas class="list_layer_map"  width="${width}" height="${height}" style="z-index: ${number};position: absolute;left: 38px"></canvas>`
+}
 // {/* <canvas class="list_layer_map" id="draw_map" width="200" height="200" style="z-index: 2;position: absolute;left: 38px"></canvas> */ }
 // // console.log(layer_list);
 
@@ -49,7 +49,7 @@
 // // list_layer_map[0].addEventListener("mouseup", (event) =>Tools_draw.stop(event), false)
 // // list_layer_map[0].addEventListener("mouseout", (event) =>Tools_draw.stop(event), false)
 // // })
-// export{
+export{
 //   layerBlock,
-//   canvasRedactor
-// }
+  canvasRedactor
+}

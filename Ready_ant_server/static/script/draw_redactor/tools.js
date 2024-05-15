@@ -16,14 +16,19 @@ class ToolsDraw {
     infoCenterHex
     arrayCoordHex
     radiusHex
+    width 
+    height
 
-    constructor(context, choice) {
+    constructor(context, choice,width,height) {
         this.context = context
         this.choice = choice
 
         this.infoCenterHex = new Set()
         this.arrayCoordHex = new Array()
-        this.radiusHex = 50
+        this.width =width
+        this.height = height
+        //25-65
+        // this.radiusHex = 65
     }
 
     setChoice(choice) {
@@ -31,6 +36,7 @@ class ToolsDraw {
     }
     setSizeLine(sizeLine) {
         this.SIZE_LINE = sizeLine
+        this.radiusHex = this.SIZE_LINE
     }
     setColorCurent(colorCurent) {
         this.COLOR_CURENT = colorCurent
@@ -38,7 +44,7 @@ class ToolsDraw {
     getInfoCenterHex(){
         return {"CoordsHex":this.arrayCoordHex,"RadiusOrLine":this.radiusHex}
     }
-    drawBoard(width, height) {
+    drawBoard(width, height,color) {
         // let hexagonAngle = Math.PI / 6 // 30 градусов в радианах
         // let sideLength = 32 // длина стороны, в пикселях
         // let hexHeight = Math.sin(hexagonAngle) * sideLength;
@@ -55,15 +61,28 @@ class ToolsDraw {
         //         this.drawHexagon(false, i, j);
         //     }
         // }
+        // this.context.clearRect(0, 0, this.width, this.height);
+        this.arrayCoordHex = []
+        this.context.beginPath()
+        this.context.strokeStyle = color
         const r = this.radiusHex/2;
-        for (let y = r; y + r * (Math.sqrt(3) / 2) < height; y += r * (Math.sqrt(3) / 2)) {
-            for (let x = r, j = 0; x + r * (1 + 1 / 2) < width; x += r * (1 + 1 / 2), y += (-1) ** j++ * r * (Math.sqrt(3) / 2)) {
-                this.drawHexagonPol(x, y,r);
+        for (let y = r; y + r * Math.sqrt(3) < height; y += r * Math.sqrt(3)) {
+            for (let x = r, j = 0; x + r * (3 / 2) < width; x += r * (3 / 2), j++) {
+                this.drawHexagonPol(x, y + (j % 2) * r * (Math.sqrt(3) / 2), r);
                 // console.log("X: ",x);
-                // console.log("Y: ",y);
-
+                // console.log("Y: ",y + (j % 2) * r * (Math.sqrt(3) / 2));
             }
         }
+        this.context.closePath();
+
+        // for (let y = r; y + r * (Math.sqrt(3) / 2) < height; y += r * (Math.sqrt(3) / 2)) {
+        //     for (let x = r, j = 0; x + r * (1 + 1 / 2) < width; x += r * (1 + 1 / 2), y += (-1) ** j++ * r * (Math.sqrt(3) / 2)) {
+        //         this.drawHexagonPol(x, y,r);
+        //         // console.log("X: ",x);
+        //         // console.log("Y: ",y);
+
+        //     }
+        // }
     }
     drawHexagonPol(x, y,r) {
         const a = Math.PI / 3;
@@ -207,12 +226,14 @@ class ToolsDraw {
         this.context.strokeRect(event.offsetX, event.offsetY, this.prevMouseX - event.offsetX, this.prevMouseY - event.offsetY);
     }
     fullClear() {
-        this.context.clearRect(0, 0, draw_map.width, draw_map.height);
+        this.context.clearRect(0, 0, this.width, this.height);
+        this.arrayCoordHex = []
     }
 
     start(event, COLOR_CURENT, SIZE_LINE) {
         this.COLOR_CURENT = COLOR_CURENT
         this.SIZE_LINE = SIZE_LINE
+
         this.is_drawing = true
         this.prevMouseX = event.offsetX
         this.prevMouseY = event.offsetY
@@ -256,6 +277,7 @@ class ToolsDraw {
                 // this.context.arc(this.prevMouseX, this.prevMouseY , this.SIZE_LINE, 0, 2 * Math.PI, true);
                 break;
             case "full_color":
+                this.radiusHex = this.SIZE_LINE
                 this.drawHexagon(true)
                 // let hexagonAngle = Math.PI / 6 // 30 градусов в радианах
                 // let sideLength = 32 // длина стороны, в пикселях
@@ -347,6 +369,7 @@ class ToolsDraw {
                 // this.context.lineTo(x, y + sideLength + hexHeight);
                 // this.context.lineTo(x, y + hexHeight);
                 // this.context.fill();
+                this.radiusHex = this.SIZE_LINE
                 this.drawHexagon(true)
                 break;
             case "full_clear":

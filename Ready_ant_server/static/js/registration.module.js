@@ -15,9 +15,10 @@ export function registrationModule() {
             // Если пароли не совпадают
             return; // Прерываем выполнение функции
         }
-        //http://localhost:8080/sign_up
+        // http://localhost:8080/sign_up
         // Отправка запроса на сервер
-        fetch('http://0.0.0.0:8080/sign_up', {
+        
+        fetch('http://localhost:8080/sign_up', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
