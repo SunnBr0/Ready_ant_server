@@ -19,6 +19,7 @@ class ToolsDraw {
     width
     height
     sizeSquare
+    sizeTriangle
     constructor(context, choice, width, height) {
         this.context = context
         this.choice = choice
@@ -38,6 +39,7 @@ class ToolsDraw {
         this.SIZE_LINE = sizeLine
         this.radiusHex = this.SIZE_LINE
         this.sizeSquare = this.SIZE_LINE
+        this.sizeTriangle = this.SIZE_LINE
     }
     setColorCurent(colorCurent) {
         this.COLOR_CURENT = colorCurent
@@ -46,7 +48,62 @@ class ToolsDraw {
         return { "CoordsHex": this.arrayCoordHex, "RadiusOrLine": this.radiusHex }
     }
 
-    drawBoardKvad(width, height, color){
+
+    drawBoardTriangle(width, height, color) {
+        const sqrt3 = Math.sqrt(3);
+
+        this.context.strokeStyle = color;
+        this.context.lineWidth = 1;
+        console.log("width", width);
+        console.log("height", height);
+        let sizeTriangle = Number(this.sizeTriangle)
+
+        for (let y = 0; y <= height; y += sizeTriangle * sqrt3 / 2) {
+            for (let x = 0; x <= width; x += sizeTriangle/2) {
+                // const row = Math.floor((2 * y) / (this.sizeTriangle * sqrt3));
+                // const xOffset = (row % 2 === 0) ? 0 : this.sizeTriangle / 2;
+                // const col = Math.floor((2 * (x - xOffset) + this.sizeTriangle / 2) / this.sizeTriangle);
+                // const coordX = (col / 2) * this.sizeTriangle + xOffset;
+                // const coordY = row * (this.sizeTriangle * sqrt3 / 2);
+                this.drawTriangle(false, x, y);
+                console.log("x: ", x);
+                console.log("y: ", y);
+            }
+        }
+    }
+
+    drawTriangle(fill, x, y) {
+        const sqrt3 = Math.sqrt(3);
+        let fillFlag = false || fill
+        const row = Math.floor((2 * y) / (this.sizeTriangle * sqrt3));
+        const xOffset = (row % 2 === 0) ? 0 : this.sizeTriangle / 2;
+        const col = Math.floor((2 * (x - xOffset) + this.sizeTriangle / 2) / this.sizeTriangle);
+        const coordX = (col / 2) * this.sizeTriangle + xOffset;
+        const coordY = row * (this.sizeTriangle * sqrt3 / 2);
+        this.context.lineWidth = 1;
+
+        if (col % 2 === 0) {
+            // this.context.beginPath()
+            this.context.moveTo(coordX, coordY);
+            this.context.lineTo(coordX + this.sizeTriangle / 2, coordY + this.sizeTriangle * sqrt3 / 2);
+            this.context.lineTo(coordX - this.sizeTriangle / 2, coordY + this.sizeTriangle * sqrt3 / 2);
+            if (fillFlag) this.context.fill();
+            else this.context.stroke();
+            // this.context.closePath();
+
+        } else {
+            // this.context.beginPath()
+            this.context.moveTo(coordX, coordY + this.sizeTriangle * sqrt3 / 2);
+            this.context.lineTo(coordX + this.sizeTriangle / 2, coordY);
+            this.context.lineTo(coordX - this.sizeTriangle / 2, coordY);
+            if (fillFlag) this.context.fill();
+            else this.context.stroke();
+            // this.context.closePath();
+        }
+        // this.context.closePath();
+    }
+
+    drawBoardKvad(width, height, color) {
         let sizeKvad = Number(this.sizeSquare)
         this.context.strokeStyle = color
         this.context.lineWidth = 1;
@@ -56,22 +113,22 @@ class ToolsDraw {
                 this.drawKvad(false, x, y);
             }
         }
-            // for (let x = 0; x <= width; x += sizeKvad) {
-            //     this.context.beginPath();
-            //     this.context.moveTo(x, 0);
-            //     this.context.lineTo(x, height);
-            //     this.context.stroke();
-            // }
-            
-            // for (let y = 0; y <= height; y += sizeKvad) {
-            //     this.context.beginPath();
-            //     this.context.moveTo(0, y);
-            //     this.context.lineTo(width, y);
-            //     this.context.stroke();
-            // }
+        // for (let x = 0; x <= width; x += sizeKvad) {
+        //     this.context.beginPath();
+        //     this.context.moveTo(x, 0);
+        //     this.context.lineTo(x, height);
+        //     this.context.stroke();
+        // }
+
+        // for (let y = 0; y <= height; y += sizeKvad) {
+        //     this.context.beginPath();
+        //     this.context.moveTo(0, y);
+        //     this.context.lineTo(width, y);
+        //     this.context.stroke();
+        // }
     }
     drawKvad(fill, x, y) {
-        
+
         let fillFlag = false || fill
         let sizeKvad = Number(this.sizeSquare)
         let coordX = Math.floor(x / sizeKvad) * sizeKvad;
@@ -330,6 +387,10 @@ class ToolsDraw {
                 // this.context.moveTo(50, 50);
                 this.drawKvad(true, this.prevMouseX, this.prevMouseY)
                 break;
+            case "triangle":
+                this.sizeTriangle = this.SIZE_LINE
+                this.drawTriangle(true, this.prevMouseX, this.prevMouseY)
+                break;
             case "full_clear":
                 this.fullClear(event)
                 break;
@@ -368,6 +429,10 @@ class ToolsDraw {
             case "kvad":
                 this.sizeSquare = this.SIZE_LINE
                 this.drawKvad(true, this.prevMouseX, this.prevMouseY)
+                break;
+            case "triangle":
+                this.sizeTriangle = this.SIZE_LINE
+                this.drawTriangle(true, this.prevMouseX, this.prevMouseY)
                 break;
             case "full_clear":
                 this.fullClear(event)

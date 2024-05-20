@@ -14,6 +14,7 @@ const url = 'http://localhost:8081/red';
 
 let hexMapFlag = false;
 let kvadMapFlag = false;
+let triangleMapFlag = false
 let saveDataMap = null
 let flagSaveDataMap = false
 console.dir(list_layer_map[0]);
@@ -137,6 +138,32 @@ redactor_map_main.addEventListener("click", (event) => {
             BackPhone.setColorCurent(COLOR_CURENT)
             BackPhone.setSizeLine(SIZE_LINE)
             BackPhone.drawBoardKvad(boardWidth, boardHeight,"black")
+        }else{
+            map.children[1].remove()
+            // Tools_draw.setSizeLine(SIZE_LINE)
+            // Tools_draw.drawBoard(boardWidth, boardHeight,"white")
+            // console.log(countClick);
+            // countClick = 0
+        }
+        // Tools_draw.setColorCurent(COLOR_CURENT)
+        // Tools_draw.setSizeLine(SIZE_LINE)
+        // Tools_draw.drawBoard(boardWidth, boardHeight)
+        choice = null
+    }
+    if(choice === "triangle_map"){
+        // Tools_draw.fullClear()
+        triangleMapFlag=!triangleMapFlag
+        if(triangleMapFlag){
+            map.insertAdjacentHTML("beforeend", canvasRedactor(-list_layer_map.length,boardWidth,boardHeight))
+            // Tools_draw.setSizeLine(SIZE_LINE)
+            // Tools_draw.drawBoard(boardWidth, boardHeight,"black")
+            let layer = list_layer_map[1]
+            let context = layer.getContext('2d');
+            let BackPhone = new ToolsDraw(context, null, draw_map.width, draw_map.height)
+            // // Tools_draw.setSizeLine(SIZE_LINE)
+            BackPhone.setColorCurent(COLOR_CURENT)
+            BackPhone.setSizeLine(SIZE_LINE)
+            BackPhone.drawBoardTriangle(boardWidth, boardHeight,"black")
         }else{
             map.children[1].remove()
             // Tools_draw.setSizeLine(SIZE_LINE)
