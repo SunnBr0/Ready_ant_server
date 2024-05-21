@@ -98,84 +98,52 @@ redactor_map_main.addEventListener("click", (event) => {
     }
 
     if(choice === "hex_map"){
-        // Tools_draw.fullClear()
         hexMapFlag=!hexMapFlag
         if(hexMapFlag){
             map.insertAdjacentHTML("beforeend", canvasRedactor(-list_layer_map.length,boardWidth,boardHeight))
-            // Tools_draw.setSizeLine(SIZE_LINE)
-            // Tools_draw.drawBoard(boardWidth, boardHeight,"black")
             let layer = list_layer_map[1]
             let context = layer.getContext('2d');
             let BackPhone = new ToolsDraw(context, null, draw_map.width, draw_map.height)
-            // // Tools_draw.setSizeLine(SIZE_LINE)
             BackPhone.setColorCurent(COLOR_CURENT)
             BackPhone.setSizeLine(SIZE_LINE)
-            BackPhone.drawBoardHex(boardWidth, boardHeight,"black")
+            BackPhone.drawBoardHex(boardWidth, boardHeight,"gray")
         }else{
             map.children[1].remove()
-            // Tools_draw.setSizeLine(SIZE_LINE)
-            // Tools_draw.drawBoard(boardWidth, boardHeight,"white")
-            // console.log(countClick);
-            // countClick = 0
         }
-        // Tools_draw.setColorCurent(COLOR_CURENT)
-        // Tools_draw.setSizeLine(SIZE_LINE)
-        // Tools_draw.drawBoard(boardWidth, boardHeight)
         choice = null
     }
 
     if(choice === "kvad_map"){
-        // Tools_draw.fullClear()
         kvadMapFlag=!kvadMapFlag
         if(kvadMapFlag){
             map.insertAdjacentHTML("beforeend", canvasRedactor(-list_layer_map.length,boardWidth,boardHeight))
-            // Tools_draw.setSizeLine(SIZE_LINE)
-            // Tools_draw.drawBoard(boardWidth, boardHeight,"black")
             let layer = list_layer_map[1]
             let context = layer.getContext('2d');
             let BackPhone = new ToolsDraw(context, null, draw_map.width, draw_map.height)
-            // // Tools_draw.setSizeLine(SIZE_LINE)
             BackPhone.setColorCurent(COLOR_CURENT)
             BackPhone.setSizeLine(SIZE_LINE)
-            BackPhone.drawBoardKvad(boardWidth, boardHeight,"black")
+            BackPhone.drawBoardKvad(boardWidth, boardHeight,"gray")
         }else{
             map.children[1].remove()
-            // Tools_draw.setSizeLine(SIZE_LINE)
-            // Tools_draw.drawBoard(boardWidth, boardHeight,"white")
-            // console.log(countClick);
-            // countClick = 0
         }
-        // Tools_draw.setColorCurent(COLOR_CURENT)
-        // Tools_draw.setSizeLine(SIZE_LINE)
-        // Tools_draw.drawBoard(boardWidth, boardHeight)
         choice = null
     }
     if(choice === "triangle_map"){
-        // Tools_draw.fullClear()
         triangleMapFlag=!triangleMapFlag
         if(triangleMapFlag){
             map.insertAdjacentHTML("beforeend", canvasRedactor(-list_layer_map.length,boardWidth,boardHeight))
-            // Tools_draw.setSizeLine(SIZE_LINE)
-            // Tools_draw.drawBoard(boardWidth, boardHeight,"black")
             let layer = list_layer_map[1]
             let context = layer.getContext('2d');
             let BackPhone = new ToolsDraw(context, null, draw_map.width, draw_map.height)
-            // // Tools_draw.setSizeLine(SIZE_LINE)
             BackPhone.setColorCurent(COLOR_CURENT)
             BackPhone.setSizeLine(SIZE_LINE)
-            BackPhone.drawBoardTriangle(boardWidth, boardHeight,"black")
+            BackPhone.drawBoardTriangle(boardWidth, boardHeight,"gray")
         }else{
             map.children[1].remove()
-            // Tools_draw.setSizeLine(SIZE_LINE)
-            // Tools_draw.drawBoard(boardWidth, boardHeight,"white")
-            // console.log(countClick);
-            // countClick = 0
         }
-        // Tools_draw.setColorCurent(COLOR_CURENT)
-        // Tools_draw.setSizeLine(SIZE_LINE)
-        // Tools_draw.drawBoard(boardWidth, boardHeight)
         choice = null
     }
+
 
 })
 map.addEventListener("mousedown", (event) => Tools_draw.start(event, COLOR_CURENT, SIZE_LINE), false)

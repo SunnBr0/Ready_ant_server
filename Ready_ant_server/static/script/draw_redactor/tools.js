@@ -14,22 +14,22 @@ class ToolsDraw {
     COLOR_CURENT
     ant_base_paht
     infoCenterHex
-    arrayCoordHex
+    arrayCoord
     radiusHex
     width
     height
     sizeSquare
     sizeTriangle
+    typeFigure
+    sizeFigure
     constructor(context, choice, width, height) {
         this.context = context
         this.choice = choice
 
         this.infoCenterHex = new Set()
-        this.arrayCoordHex = new Array()
+        this.arrayCoord = new Array()
         this.width = width
         this.height = height
-        //25-65
-        // this.radiusHex = 65
     }
 
     setChoice(choice) {
@@ -37,17 +37,17 @@ class ToolsDraw {
     }
     setSizeLine(sizeLine) {
         this.SIZE_LINE = sizeLine
-        this.radiusHex = this.SIZE_LINE
-        this.sizeSquare = this.SIZE_LINE
-        this.sizeTriangle = this.SIZE_LINE
+        this.sizeFigure = this.SIZE_LINE
+        // this.sizeSquare = this.SIZE_LINE
+        // this.sizeTriangle = this.SIZE_LINE
     }
     setColorCurent(colorCurent) {
         this.COLOR_CURENT = colorCurent
     }
     getInfoCenterHex() {
-        return { "CoordsHex": this.arrayCoordHex, "RadiusOrLine": this.radiusHex }
+        return { "CoordsHex": this.arrayCoord, "RadiusOrLine": this.sizeFigure, "Type": this.typeFigure ,"MapWidth":this.width,"MapHeight":this.height}
     }
-
+    
 
     drawBoardTriangle(width, height, color) {
         const sqrt3 = Math.sqrt(3);
@@ -56,18 +56,11 @@ class ToolsDraw {
         this.context.lineWidth = 1;
         console.log("width", width);
         console.log("height", height);
-        let sizeTriangle = Number(this.sizeTriangle)
+        let sizeFigure = Number(this.sizeFigure)
 
-        for (let y = 0; y <= height; y += sizeTriangle * sqrt3 / 2) {
-            for (let x = 0; x <= width; x += sizeTriangle/2) {
-                // const row = Math.floor((2 * y) / (this.sizeTriangle * sqrt3));
-                // const xOffset = (row % 2 === 0) ? 0 : this.sizeTriangle / 2;
-                // const col = Math.floor((2 * (x - xOffset) + this.sizeTriangle / 2) / this.sizeTriangle);
-                // const coordX = (col / 2) * this.sizeTriangle + xOffset;
-                // const coordY = row * (this.sizeTriangle * sqrt3 / 2);
+        for (let y = 0; y <= height; y += sizeFigure * sqrt3 / 2) {
+            for (let x = 0; x <= width; x += sizeFigure / 2) {
                 this.drawTriangle(false, x, y);
-                console.log("x: ", x);
-                console.log("y: ", y);
             }
         }
     }
@@ -75,120 +68,96 @@ class ToolsDraw {
     drawTriangle(fill, x, y) {
         const sqrt3 = Math.sqrt(3);
         let fillFlag = false || fill
-        const row = Math.floor((2 * y) / (this.sizeTriangle * sqrt3));
-        const xOffset = (row % 2 === 0) ? 0 : this.sizeTriangle / 2;
-        const col = Math.floor((2 * (x - xOffset) + this.sizeTriangle / 2) / this.sizeTriangle);
-        const coordX = (col / 2) * this.sizeTriangle + xOffset;
-        const coordY = row * (this.sizeTriangle * sqrt3 / 2);
+        const row = Math.floor((2 * y) / (this.sizeFigure * sqrt3));
+        const xOffset = (row % 2 === 0) ? 0 : this.sizeFigure / 2;
+        const col = Math.floor((2 * (x - xOffset) + this.sizeFigure / 2) / this.sizeFigure);
+        const coordX = (col / 2) * this.sizeFigure + xOffset;
+        const coordY = row * (this.sizeFigure * sqrt3 / 2);
+
         this.context.lineWidth = 1;
 
-        if (col % 2 === 0) {
-            // this.context.beginPath()
-            this.context.moveTo(coordX, coordY);
-            this.context.lineTo(coordX + this.sizeTriangle / 2, coordY + this.sizeTriangle * sqrt3 / 2);
-            this.context.lineTo(coordX - this.sizeTriangle / 2, coordY + this.sizeTriangle * sqrt3 / 2);
-            if (fillFlag) this.context.fill();
-            else this.context.stroke();
-            // this.context.closePath();
 
-        } else {
-            // this.context.beginPath()
-            this.context.moveTo(coordX, coordY + this.sizeTriangle * sqrt3 / 2);
-            this.context.lineTo(coordX + this.sizeTriangle / 2, coordY);
-            this.context.lineTo(coordX - this.sizeTriangle / 2, coordY);
+        let centerX, centerY;
+        if (col % 2 === 0) { // Вверх
+            centerX = coordX;
+            centerY = coordY + this.sizeFigure * sqrt3 / 3;
+        } else { // Вниз
+            centerX = coordX;
+            centerY = coordY + this.sizeFigure * sqrt3 / 6;
+        }
+        if (this.typeFigure == "hexagon" || this.typeFigure == "kvad") {
+            this.arrayCoord = []
+        }
+        // Если флаг заполнения установлен и координаты центра еще не в массиве
+        if (fillFlag && !this.arrayCoord.some(subArray => subArray[0] === centerX && subArray[1] === centerY)) {
+            this.arrayCoord.push([centerX, centerY]);
+        }
+        this.typeFigure = "triangle"
+
+
+        if (col % 2 === 0) {
+            this.context.moveTo(coordX, coordY);
+            this.context.lineTo(coordX + this.sizeFigure / 2, coordY + this.sizeFigure * sqrt3 / 2);
+            this.context.lineTo(coordX - this.sizeFigure / 2, coordY + this.sizeFigure * sqrt3 / 2);
             if (fillFlag) this.context.fill();
             else this.context.stroke();
-            // this.context.closePath();
+        } else {
+            this.context.moveTo(coordX, coordY + this.sizeFigure * sqrt3 / 2);
+            this.context.lineTo(coordX + this.sizeFigure / 2, coordY);
+            this.context.lineTo(coordX - this.sizeFigure / 2, coordY);
+            if (fillFlag) this.context.fill();
+            else this.context.stroke();
         }
-        // this.context.closePath();
     }
 
     drawBoardKvad(width, height, color) {
-        let sizeKvad = Number(this.sizeSquare)
+        let sizeKvad = Number(this.sizeFigure)
         this.context.strokeStyle = color
         this.context.lineWidth = 1;
-        console.log(sizeKvad);
+        // console.log(sizeKvad);
         for (let x = 0; x <= width; x += sizeKvad) {
             for (let y = 0; y <= height; y += sizeKvad) {
                 this.drawKvad(false, x, y);
             }
         }
-        // for (let x = 0; x <= width; x += sizeKvad) {
-        //     this.context.beginPath();
-        //     this.context.moveTo(x, 0);
-        //     this.context.lineTo(x, height);
-        //     this.context.stroke();
-        // }
-
-        // for (let y = 0; y <= height; y += sizeKvad) {
-        //     this.context.beginPath();
-        //     this.context.moveTo(0, y);
-        //     this.context.lineTo(width, y);
-        //     this.context.stroke();
-        // }
     }
     drawKvad(fill, x, y) {
 
         let fillFlag = false || fill
-        let sizeKvad = Number(this.sizeSquare)
+        let sizeKvad = Number(this.sizeFigure)
         let coordX = Math.floor(x / sizeKvad) * sizeKvad;
         let coordY = Math.floor(y / sizeKvad) * sizeKvad;
-        // this.context.beginPath();
-        // this.context.beginPath();
+        let centerX = coordX + sizeKvad / 2;
+        let centerY = coordY + sizeKvad / 2;
+
+
+        if (this.typeFigure == "hexagon" || this.typeFigure == "triangle") {
+            this.arrayCoord = []
+        }
+        // Если флаг заполнения установлен и координаты центра еще не в массиве
+        if (fillFlag && !this.arrayCoord.some(subArray => subArray[0] === centerX && subArray[1] === centerY)) {
+            this.arrayCoord.push([centerX, centerY]);
+        }
+        this.typeFigure = "kvad"
+
+
         this.context.lineWidth = 1;
         this.context.moveTo(coordX, coordY);
         this.context.lineTo(coordX + sizeKvad, coordY); // линия вправо
         this.context.lineTo(coordX + sizeKvad, coordY + sizeKvad); // линия вниз
         this.context.lineTo(coordX, coordY + sizeKvad); // линия влево
-        // this.context.closePath(); // смыкание начала и конца рисунка (левая стена)
         if (fillFlag) this.context.fill();
         else this.context.stroke();
-        // this.context.closePath();
-        // this.context.fill();
-
     }
-
-
     drawBoardHex(width, height, color) {
-
-        // let hexagonAngle = Math.PI / 6 // 30 градусов в радианах
-        // let sideLength = 32 // длина стороны, в пикселях
-        // let hexHeight = Math.sin(hexagonAngle) * sideLength;
-        // let hexRadius = Math.cos(hexagonAngle) * sideLength;
-        // let hexRectangleWidth = 2 * hexRadius;
-        // for (let i = 0; i < width; i++) {
-        //     for (let j = 0; j < height; j++) {
-        //         this.drawHexagon(false, i * hexRectangleWidth + ((j % 2) * hexRadius),
-        //             j * (sideLength + hexHeight), false);
-        //     }
-        // }
-        // for (let i = 0; i < width; i++) {
-        //     for (let j = 0; j < height; j++) {
-        //         this.drawHexagon(false, i, j);
-        //     }
-        // }
-        // this.context.clearRect(0, 0, this.width, this.height);
-        this.arrayCoordHex = []
-        // this.context.beginPath()
+        this.arrayCoord = []
         this.context.strokeStyle = color
-        const r = this.radiusHex / 2;
+        const r = this.sizeFigure / 2;
         for (let y = r; y + r * Math.sqrt(3) < height; y += r * Math.sqrt(3)) {
             for (let x = r, j = 0; x + r * (3 / 2) < width; x += r * (3 / 2), j++) {
                 this.drawHexagonPol(x, y + (j % 2) * r * (Math.sqrt(3) / 2), r);
-                // console.log("X: ",x);
-                // console.log("Y: ",y + (j % 2) * r * (Math.sqrt(3) / 2));
             }
         }
-        // this.context.closePath();
-
-        // for (let y = r; y + r * (Math.sqrt(3) / 2) < height; y += r * (Math.sqrt(3) / 2)) {
-        //     for (let x = r, j = 0; x + r * (1 + 1 / 2) < width; x += r * (1 + 1 / 2), y += (-1) ** j++ * r * (Math.sqrt(3) / 2)) {
-        //         this.drawHexagonPol(x, y,r);
-        //         // console.log("X: ",x);
-        //         // console.log("Y: ",y);
-
-        //     }
-        // }
     }
     drawHexagonPol(x, y, r) {
         const a = Math.PI / 3;
@@ -205,7 +174,7 @@ class ToolsDraw {
         let fillFlag = fill || false;
         let x, y
         const a = Math.PI / 3;
-        const r = this.radiusHex / 2;
+        const r = this.sizeFigure / 2;
         const k = 3 / 4
         const rSmall = (Math.sqrt(3) / 2) * r
         const mouseX = this.prevMouseX;
@@ -222,106 +191,20 @@ class ToolsDraw {
             y = closestY * (2 * rSmall) + ((rSmall) * (closestX % 2)) + r
             x = closestX * ((2 * r) * k) + r
         }
-
-        if (!this.arrayCoordHex.some(subArray => subArray[0] === [x, y][0] && subArray[1] === [x, y][1])) {
-            this.arrayCoordHex.push([x, y]);
+        if (this.typeFigure == "kvad" || this.typeFigure == "triangle") {
+            this.arrayCoord = []
         }
+        if (!this.arrayCoord.some(subArray => subArray[0] === [x, y][0] && subArray[1] === [x, y][1])) {
+            this.arrayCoord.push([x, y]);
+        }
+        this.typeFigure = "hexagon"
+
 
         this.drawHexagonPol(x, y, r)
 
-        // let x, y
-        // let fillFlag = fill || false;
-        // let hexagonAngle = Math.PI / 6 // 30 градусов в радианах
-        // let sideLength = 32 // длина стороны, в пикселях
-        // let hexHeight = Math.sin(hexagonAngle ) * sideLength;
-        // let hexRadius = Math.cos(hexagonAngle) * sideLength;
-        // let hexRectangleHeight = sideLength + 2 * hexHeight;
-        // let hexRectangleWidth = 2 * hexRadius;
-        // let hexY = Math.floor(this.prevMouseY / (hexHeight + sideLength));
-        // let hexX = Math.floor((this.prevMouseX - (hexY % 2) * hexRadius) / hexRectangleWidth);
-        // if (coordsX == null || coordsY == null) {
-        //     x = hexX * hexRectangleWidth + ((hexY % 2) * hexRadius);
-        //     y = hexY * (hexHeight + sideLength);
-        // } else {
-        //     this.context.beginPath();
-        //     x = coordsX * hexRectangleWidth + ((coordsY % 2) * hexRadius);
-        //     y = coordsY * (hexHeight + sideLength);
-        // }
-        // this.context.lineWidth = 2;
-        // this.context.moveTo(x + hexRadius, y);
-        // this.context.lineTo(x + hexRectangleWidth, y + hexHeight);
-        // this.context.lineTo(x + hexRectangleWidth, y + hexHeight + sideLength);
-        // this.context.lineTo(x + hexRadius, y + hexRectangleHeight);
-        // this.context.lineTo(x, y + sideLength + hexHeight);
-        // this.context.lineTo(x, y + hexHeight);
-        // // this.context.fill();
-        // this.context.closePath();
-        // this.context.save();
 
         if (fillFlag) this.context.fill();
         else this.context.stroke();
-
-
-
-        // let hexagonAngle = Math.PI / 6; // 30 градусов в радианах
-        // let sideLength = 32; // длина стороны, в пикселях
-        // let hexHeight = Math.sin(hexagonAngle) * sideLength;
-        // let hexRadius = Math.cos(hexagonAngle) * sideLength;
-        // let hexRectangleHeight = sideLength + 2 * hexHeight;
-        // let hexRectangleWidth = 2 * hexRadius;
-        // let hexY = Math.floor(this.prevMouseY / (hexHeight + sideLength));
-        // let hexX = Math.floor((this.prevMouseX - (hexY % 2) * hexRadius) / hexRectangleWidth);
-        // let x = hexX * hexRectangleWidth + ((hexY % 2) * hexRadius);
-        // let y = hexY * (hexHeight + sideLength);
-
-        // // Поворот на 180 градусов
-        // let rotationAngle = Math.PI/2;
-
-        // this.context.translate(x + hexRectangleWidth / 2, y + hexRectangleHeight / 2);
-        // this.context.rotate(rotationAngle);
-        // this.context.translate(-(x + hexRectangleWidth / 2), -(y + hexRectangleHeight / 2));
-
-        // this.context.moveTo(x + hexRadius, y + hexRectangleHeight);
-        // this.context.lineTo(x + hexRectangleWidth, y + hexRectangleHeight - hexHeight);
-        // this.context.lineTo(x + hexRectangleWidth, y + hexRectangleHeight - hexHeight - sideLength);
-        // this.context.lineTo(x + hexRadius, y);
-        // this.context.lineTo(x, y + sideLength - hexHeight);
-        // this.context.lineTo(x, y + hexRectangleHeight - hexHeight);
-        // this.context.fill();
-
-        //     console.log("##############################################");
-        //     let hexagonAngle = Math.PI / 6 // 30 градусов в радианах
-        //     let sideLength = 32 // длина стороны, в пикселях
-        //     // boardWidth = 100, // ширина "доски" по вертикали
-        //     // boardHeight = 100, // высота "доски" по вертикали
-
-        //     let hexHeight = Math.sin(hexagonAngle) * sideLength;
-        //     let hexRadius = Math.cos(hexagonAngle) * sideLength;
-        //     let hexRectangleHeight = sideLength + 2 * hexHeight;
-        //     let hexRectangleWidth = 2 * hexRadius;
-        //     let hexY = Math.floor(this.prevMouseY / (hexHeight + sideLength));
-        //     let hexX = Math.floor((this.prevMouseX - (hexY % 2) * hexRadius) / hexRectangleWidth);
-        //     let x = hexX * hexRectangleWidth + ((hexY % 2) * hexRadius);
-        //     let y = hexY * (hexHeight + sideLength);
-        //     // console.log("hexX: ", hexX);
-        //     // console.log("hexY: ", hexY);
-        //     // console.log("screenX: ", screenX);
-        //     // console.log("screenY: ", screenY);
-        //     // console.log("eventInfo.offsetX ", this.prevMouseX);
-        //     // console.log("eventInfo.offsetY ", this.prevMouseY);
-        //     // let centerX = x + hexRectangleWidth / 2;
-        //     // let centerY = y + hexRectangleHeight / 2;
-        //     // console.log("CenterX: ", Math.round(centerX), "CenterY:", centerY);
-        //     // var fill = fill || false;
-        //     this.context.moveTo(x + hexRadius, y);
-        //     this.context.lineTo(x + hexRectangleWidth, y + hexHeight);
-        //     this.context.lineTo(x + hexRectangleWidth, y + hexHeight + sideLength);
-        //     this.context.lineTo(x + hexRadius, y + hexRectangleHeight);
-        //     this.context.lineTo(x, y + sideLength + hexHeight);
-        //     this.context.lineTo(x, y + hexHeight);
-        //     this.context.fill();
-        // if (fill) this.context.fill();
-        // else this.context.stroke();
     }
     drawRect(event) {
         this.context.lineJoin = ""
@@ -329,7 +212,8 @@ class ToolsDraw {
     }
     fullClear() {
         this.context.clearRect(0, 0, this.width, this.height);
-        this.arrayCoordHex = []
+        this.arrayCoord = []
+        this.typeFigure = null
     }
 
     start(event, COLOR_CURENT, SIZE_LINE) {
@@ -343,8 +227,6 @@ class ToolsDraw {
         this.context.lineWidth = this.SIZE_LINE
         this.context.strokeStyle = this.COLOR_CURENT
         this.context.fillStyle = this.COLOR_CURENT;
-        // this.context.lineCap = "round"
-        // this.context.lineJoin = "bevel"
         console.log(this.SIZE_LINE);
         console.log("DASDADSASD");
         switch (this.choice) {
@@ -371,24 +253,20 @@ class ToolsDraw {
             case "draw":
                 this.context.lineCap = "round"
                 this.context.lineJoin = "round"
-                // this.context.fillRect(this.prevMouseX - Math.round(this.SIZE_LINE / 2), this.prevMouseY - Math.round(this.SIZE_LINE / 2), this.SIZE_LINE, this.SIZE_LINE);
-                // this.context.fillRect(this.prevMouseX - Math.round(this.SIZE_LINE / 2), this.prevMouseY - Math.round(this.SIZE_LINE / 2), this.SIZE_LINE, this.SIZE_LINE);
                 this.context.moveTo(this.prevMouseX, this.prevMouseY);
                 this.context.lineTo(this.prevMouseX + 0.01, this.prevMouseY + 0.01);
                 this.context.stroke();
-                // this.context.arc(this.prevMouseX, this.prevMouseY , this.SIZE_LINE, 0, 2 * Math.PI, true);
                 break;
             case "full_color":
-                this.radiusHex = this.SIZE_LINE
+                this.sizeFigure = this.SIZE_LINE
                 this.drawHexagon(true)
                 break;
             case "kvad":
-                this.sizeSquare = this.SIZE_LINE
-                // this.context.moveTo(50, 50);
+                this.sizeFigure = this.SIZE_LINE
                 this.drawKvad(true, this.prevMouseX, this.prevMouseY)
                 break;
             case "triangle":
-                this.sizeTriangle = this.SIZE_LINE
+                this.sizeFigure = this.SIZE_LINE
                 this.drawTriangle(true, this.prevMouseX, this.prevMouseY)
                 break;
             case "full_clear":
@@ -423,15 +301,15 @@ class ToolsDraw {
                 this.drawRect(event)
                 break;
             case "full_color":
-                this.radiusHex = this.SIZE_LINE
+                this.sizeFigure = this.SIZE_LINE
                 this.drawHexagon(true)
                 break;
             case "kvad":
-                this.sizeSquare = this.SIZE_LINE
+                this.sizeFigure = this.SIZE_LINE
                 this.drawKvad(true, this.prevMouseX, this.prevMouseY)
                 break;
             case "triangle":
-                this.sizeTriangle = this.SIZE_LINE
+                this.sizeFigure = this.SIZE_LINE
                 this.drawTriangle(true, this.prevMouseX, this.prevMouseY)
                 break;
             case "full_clear":
@@ -440,9 +318,6 @@ class ToolsDraw {
             default:
                 break;
         }
-        console.log("obj");
-        console.log(event.offsetX);
-        console.log(event.offsetY);
     }
 
     stop(event) {
