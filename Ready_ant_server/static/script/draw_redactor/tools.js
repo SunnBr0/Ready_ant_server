@@ -11,7 +11,7 @@ class ToolsDraw {
     prevMouseY
     SIZE_LINE
     choice
-    COLOR_CURENT
+    COLOR_CURENT = "#000000"
     ant_base_paht
     infoCenterHex
     arrayCoord
@@ -22,10 +22,16 @@ class ToolsDraw {
     sizeTriangle
     typeFigure
     sizeFigure
+    startX
+    startY
+    offsetX = 0
+    offsetY = 0
+    scale = 1
+    mainChoiceFigure = null
+    mainSizeFigure = 0
     constructor(context, choice, width, height) {
         this.context = context
         this.choice = choice
-
         this.infoCenterHex = new Set()
         this.arrayCoord = new Array()
         this.width = width
@@ -45,17 +51,17 @@ class ToolsDraw {
         this.COLOR_CURENT = colorCurent
     }
     getInfoCenterHex() {
-        return { "CoordsHex": this.arrayCoord, "RadiusOrLine": this.sizeFigure, "Type": this.typeFigure ,"MapWidth":this.width,"MapHeight":this.height}
+        return { "CoordsHex": this.arrayCoord, "RadiusOrLine": this.sizeFigure, "Type": this.typeFigure, "MapWidth": this.width, "MapHeight": this.height }
     }
-    
+
 
     drawBoardTriangle(width, height, color) {
         const sqrt3 = Math.sqrt(3);
 
         this.context.strokeStyle = color;
         this.context.lineWidth = 1;
-        console.log("width", width);
-        console.log("height", height);
+        // console.log("width", width);
+        // console.log("height", height);
         let sizeFigure = Number(this.sizeFigure)
 
         for (let y = 0; y <= height; y += sizeFigure * sqrt3 / 2) {
@@ -89,8 +95,15 @@ class ToolsDraw {
             this.arrayCoord = []
         }
         // Если флаг заполнения установлен и координаты центра еще не в массиве
-        if (fillFlag && !this.arrayCoord.some(subArray => subArray[0] === centerX && subArray[1] === centerY)) {
+        if ((fillFlag) && (!this.arrayCoord.some(subArray => subArray[0] === centerX && subArray[1] === centerY)) && (this.choice != "clear")) {
             this.arrayCoord.push([centerX, centerY]);
+        }
+        if (this.choice == "clear") {
+            for (let i = 0; i < this.arrayCoord.length; i++) {
+                if (this.arrayCoord[i][0] == centerX && this.arrayCoord[i][1] == centerY) {
+                    this.arrayCoord.splice(i, 1)
+                }
+            }
         }
         this.typeFigure = "triangle"
 
@@ -135,8 +148,15 @@ class ToolsDraw {
             this.arrayCoord = []
         }
         // Если флаг заполнения установлен и координаты центра еще не в массиве
-        if (fillFlag && !this.arrayCoord.some(subArray => subArray[0] === centerX && subArray[1] === centerY)) {
+        if ((fillFlag) && (!this.arrayCoord.some(subArray => subArray[0] === centerX && subArray[1] === centerY)) && (this.choice != "clear")) {
             this.arrayCoord.push([centerX, centerY]);
+        }
+        if (this.choice == "clear") {
+            for (let i = 0; i < this.arrayCoord.length; i++) {
+                if (this.arrayCoord[i][0] == centerX && this.arrayCoord[i][1] == centerY) {
+                    this.arrayCoord.splice(i, 1)
+                }
+            }
         }
         this.typeFigure = "kvad"
 
@@ -194,8 +214,15 @@ class ToolsDraw {
         if (this.typeFigure == "kvad" || this.typeFigure == "triangle") {
             this.arrayCoord = []
         }
-        if (!this.arrayCoord.some(subArray => subArray[0] === [x, y][0] && subArray[1] === [x, y][1])) {
+        if ((!this.arrayCoord.some(subArray => subArray[0] === [x, y][0] && subArray[1] === [x, y][1]) && (this.choice != "clear"))) {
             this.arrayCoord.push([x, y]);
+        }
+        if (this.choice == "clear") {
+            for (let i = 0; i < this.arrayCoord.length; i++) {
+                if (this.arrayCoord[i][0] == x && this.arrayCoord[i][1] == y) {
+                    this.arrayCoord.splice(i, 1)
+                }
+            }
         }
         this.typeFigure = "hexagon"
 
@@ -219,7 +246,8 @@ class ToolsDraw {
     start(event, COLOR_CURENT, SIZE_LINE) {
         this.COLOR_CURENT = COLOR_CURENT
         this.SIZE_LINE = SIZE_LINE
-
+        // this.startX = event.clientX - this.offsetX;
+        // this.startY = event.clientY - this.offsetY;
         this.is_drawing = true
         this.prevMouseX = event.offsetX
         this.prevMouseY = event.offsetY
@@ -227,8 +255,8 @@ class ToolsDraw {
         this.context.lineWidth = this.SIZE_LINE
         this.context.strokeStyle = this.COLOR_CURENT
         this.context.fillStyle = this.COLOR_CURENT;
-        console.log(this.SIZE_LINE);
-        console.log("DASDADSASD");
+        // console.log(this.SIZE_LINE);
+        // console.log("DASDADSASD");
         switch (this.choice) {
             case "RAbota_ant":
                 this.context.translate(this.prevMouseX, this.prevMouseY);
@@ -258,27 +286,78 @@ class ToolsDraw {
                 this.context.stroke();
                 break;
             case "full_color":
+                if (this.mainChoiceFigure != "full_color" || this.mainSizeFigure != this.SIZE_LINE) {
+                    this.fullClear(event)
+                }
+                this.context.fillStyle = this.COLOR_CURENT || "black"
+                this.context.strokeStyle = this.COLOR_CURENT || "#000000"
+                this.mainChoiceFigure = this.choice
                 this.sizeFigure = this.SIZE_LINE
+                this.mainSizeFigure = this.SIZE_LINE
                 this.drawHexagon(true)
                 break;
             case "kvad":
+                console.log(this.mainSizeFigure);
+                console.log(this.SIZE_LINE);
+
+                if (this.mainChoiceFigure != "kvad" || this.mainSizeFigure != this.SIZE_LINE) {
+                    this.fullClear(event)
+                }
+                this.context.fillStyle = this.COLOR_CURENT || "#000000"
+                this.context.strokeStyle = this.COLOR_CURENT || "#000000"
+                console.log(this.COLOR_CURENT);
+                this.mainChoiceFigure = this.choice
                 this.sizeFigure = this.SIZE_LINE
+                this.mainSizeFigure = this.SIZE_LINE
                 this.drawKvad(true, this.prevMouseX, this.prevMouseY)
                 break;
             case "triangle":
+                if (this.mainChoiceFigure != "triangle" || this.mainSizeFigure != this.SIZE_LINE) {
+                    this.fullClear(event)
+                }
+                this.context.fillStyle = this.COLOR_CURENT || "#000000"
+                this.context.strokeStyle = this.COLOR_CURENT || "#000000"
+                this.mainChoiceFigure = this.choice
                 this.sizeFigure = this.SIZE_LINE
+                this.mainSizeFigure = this.SIZE_LINE
                 this.drawTriangle(true, this.prevMouseX, this.prevMouseY)
+                break;
+            case "zoom":
+                this.startX = event.clientX - this.offsetX;
+                this.startY = event.clientY - this.offsetY;
+                // console.log(this.offsetX);
                 break;
             case "full_clear":
                 this.fullClear(event)
                 break;
-
+            case "clear":
+                if (this.mainChoiceFigure == "kvad") {
+                    this.context.strokeStyle = "#FFFFFF"
+                    this.context.fillStyle = "#FFFFFF"
+                    this.drawKvad(true, this.prevMouseX, this.prevMouseY)
+                }
+                if (this.mainChoiceFigure == "full_color") {
+                    this.context.strokeStyle = "#FFFFFF"
+                    this.context.fillStyle = "#FFFFFF"
+                    this.drawHexagon(true)
+                }
+                if (this.mainChoiceFigure == "triangle") {
+                    this.context.strokeStyle = "#FFFFFF"
+                    this.context.fillStyle = "#FFFFFF"
+                    this.drawTriangle(true, this.prevMouseX, this.prevMouseY)
+                }
+                this.context.fillStyle = this.COLOR_CURENT
+                this.context.strokeStyle = this.COLOR_CURENT
+                // this.context.strokeStyle = "#fff"
+                // this.context.lineTo(event.offsetX, event.offsetY)
+                // this.context.stroke()
+                break;
             default:
                 break;
         }
 
         this.snapshot = this.context.getImageData(0, 0, this.context.canvas.width, this.context.canvas.height)
-        console.log("d");
+        // console.log("d");
     }
     draw(event) {
         this.prevMouseX = event.offsetX
@@ -293,9 +372,24 @@ class ToolsDraw {
                 this.context.stroke()
                 break;
             case "clear":
-                this.context.strokeStyle = "#fff"
-                this.context.lineTo(event.offsetX, event.offsetY)
-                this.context.stroke()
+                if (this.mainChoiceFigure == "kvad") {
+                    this.context.strokeStyle = "#fff"
+                    this.context.fillStyle = "#fff"
+                    this.drawKvad(true, this.prevMouseX, this.prevMouseY)
+                }
+                if (this.mainChoiceFigure == "full_color") {
+                    this.context.strokeStyle = "#fff"
+                    this.context.fillStyle = "#fff"
+                    this.drawHexagon(true)
+                }
+                if (this.mainChoiceFigure == "triangle") {
+                    this.context.strokeStyle = "#fff"
+                    this.context.fillStyle = "#fff"
+                    this.drawTriangle(true, this.prevMouseX, this.prevMouseY)
+                }
+                // this.context.strokeStyle = "#fff"
+                // this.context.lineTo(event.offsetX, event.offsetY)
+                // this.context.stroke()
                 break;
             case "figure":
                 this.drawRect(event)
@@ -312,6 +406,46 @@ class ToolsDraw {
                 this.sizeFigure = this.SIZE_LINE
                 this.drawTriangle(true, this.prevMouseX, this.prevMouseY)
                 break;
+            case "zoom":
+                this.offsetX = event.clientX - this.startX;
+                this.offsetY = event.clientY - this.startY;
+                // console.log(this.startX);
+                // Ограничение перетаскивания по горизонтали
+                // let maxOffsetX = 100;
+                // let minOffsetX = -(this.width * this.scale - this.width);
+                // this.offsetX = Math.max(Math.min(this.offsetX, maxOffsetX), minOffsetX);
+
+                // // // Ограничение перетаскивания по вертикали
+                // let maxOffsetY = 100;
+                // let minOffsetY = -(this.height * this.scale - this.height);
+                // this.offsetY = Math.max(Math.min(this.offsetY, maxOffsetY), minOffsetY);
+                this.context.lineWidth = 1;
+
+                this.context.clearRect(0, 0, this.width, this.height);
+                this.context.save();
+                this.context.translate(this.offsetX, this.offsetY);
+                this.context.scale(this.scale, this.scale);
+
+                // Example: Draw a grid
+                // const size = Number(this.sizeFigure);
+                // for (let x = 0; x < 2000; x += size) {
+                //     for (let y = 0; y < 2000; y += size) {
+                //         // this.context.beginPath();
+                //         // this.drawKvad(false, x, y);
+                //         // this.context.closePath();
+                //         // this.arrayCoord
+                //         // console.log(this.arrayCoord);
+                //     }
+                // }
+                // this.drawKvad(true, 150, 150);
+                for (let item = 0; item < this.arrayCoord.length; item++) {
+                    // console.log(this.arrayCoord[item]);
+                    this.context.beginPath();
+                    this.drawKvad(true, this.arrayCoord[item][0], this.arrayCoord[item][1]);
+                    this.context.closePath();
+                }
+                this.context.restore();
+                break;
             case "full_clear":
                 this.fullClear(event)
                 break;
@@ -321,7 +455,7 @@ class ToolsDraw {
     }
 
     stop(event) {
-        console.log("######");
+        // console.log("######");
         if (this.is_drawing) {
             this.context.stroke()
             this.context.closePath()

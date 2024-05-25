@@ -127,6 +127,20 @@ redactor_map_main.addEventListener("click", (event) => {
             map.children[1].remove()
         }
         choice = null
+        /*
+        kvadMapFlag=!kvadMapFlag
+        if(kvadMapFlag){
+            map.insertAdjacentHTML("afterbegin", canvasRedactor(list_layer_map.length,boardWidth,boardHeight))
+            let layer = list_layer_map[0]
+            let context = layer.getContext('2d');
+            let BackPhone = new ToolsDraw(context, null, draw_map.width, draw_map.height)
+            BackPhone.setColorCurent(COLOR_CURENT)
+            BackPhone.setSizeLine(SIZE_LINE)
+            BackPhone.drawBoardKvad(boardWidth, boardHeight,"gray")
+        }else{
+            map.children[0].remove()
+        }
+        choice = null */
     }
     if(choice === "triangle_map"){
         triangleMapFlag=!triangleMapFlag
