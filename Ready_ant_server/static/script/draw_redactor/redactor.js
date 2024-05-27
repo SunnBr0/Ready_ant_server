@@ -19,8 +19,12 @@ let saveDataMap = null
 let flagSaveDataMap = false
 console.dir(list_layer_map[0]);
 let layer = draw_map
+
+let mapWidth = draw_map.width+500
+let mapHeight = draw_map.height+500
+
 let context = layer.getContext('2d');
-var Tools_draw = new ToolsDraw(context, null, draw_map.width, draw_map.height)
+var Tools_draw = new ToolsDraw(context, null,mapWidth, mapHeight)
 let boardWidth = list_layer_map[0].width// ширина "доски" по вертикали
 let boardHeight = list_layer_map[0].height // высота "доски" по вертикали
 // Tools_draw.drawBoard(boardWidth, boardHeight)
@@ -97,66 +101,69 @@ redactor_map_main.addEventListener("click", (event) => {
         }
     }
 
-    if(choice === "hex_map"){
-        hexMapFlag=!hexMapFlag
-        if(hexMapFlag){
-            map.insertAdjacentHTML("beforeend", canvasRedactor(-list_layer_map.length,boardWidth,boardHeight))
-            let layer = list_layer_map[1]
-            let context = layer.getContext('2d');
-            let BackPhone = new ToolsDraw(context, null, draw_map.width, draw_map.height)
-            BackPhone.setColorCurent(COLOR_CURENT)
-            BackPhone.setSizeLine(SIZE_LINE)
-            BackPhone.drawBoardHex(boardWidth, boardHeight,"gray")
-        }else{
-            map.children[1].remove()
-        }
-        choice = null
-    }
+    // if(choice === "hex_map"){
+    //     hexMapFlag=!hexMapFlag
+    //     if(hexMapFlag){
+    //         map.insertAdjacentHTML("beforeend", canvasRedactor(-list_layer_map.length,boardWidth,boardHeight))
+    //         let layer = list_layer_map[1]
+    //         let context = layer.getContext('2d');
+    //         let BackPhone = new ToolsDraw(context, null, draw_map.width, draw_map.height)
+    //         BackPhone.setColorCurent(COLOR_CURENT)
+    //         BackPhone.setSizeLine(SIZE_LINE)
+    //         BackPhone.drawBoardHex(boardWidth, boardHeight,"gray")
+    //     }else{
+    //         map.children[1].remove()
+    //     }
+    //     choice = null
+    // }
 
     if(choice === "kvad_map"){
         kvadMapFlag=!kvadMapFlag
         if(kvadMapFlag){
-            map.insertAdjacentHTML("beforeend", canvasRedactor(-list_layer_map.length,boardWidth,boardHeight))
-            let layer = list_layer_map[1]
-            let context = layer.getContext('2d');
-            let BackPhone = new ToolsDraw(context, null, draw_map.width, draw_map.height)
-            BackPhone.setColorCurent(COLOR_CURENT)
-            BackPhone.setSizeLine(SIZE_LINE)
-            BackPhone.drawBoardKvad(boardWidth, boardHeight,"gray")
+            // map.insertAdjacentHTML("beforeend", canvasRedactor(-list_layer_map.length,boardWidth,boardHeight))
+            // let layer = list_layer_map[1]
+            // let context = layer.getContext('2d');
+            // let BackPhone = new ToolsDraw(context, null, draw_map.width, draw_map.height)
+            // BackPhone.setColorCurent(COLOR_CURENT)
+            // BackPhone.setSizeLine(SIZE_LINE)
+            // BackPhone.drawBoardKvad(boardWidth, boardHeight,"gray")
+            Tools_draw.drawBoardKvadClient(mapWidth,mapHeight,"gray",kvadMapFlag)
         }else{
-            map.children[1].remove()
-        }
-        choice = null
-        /*
-        kvadMapFlag=!kvadMapFlag
-        if(kvadMapFlag){
-            map.insertAdjacentHTML("afterbegin", canvasRedactor(list_layer_map.length,boardWidth,boardHeight))
-            let layer = list_layer_map[0]
-            let context = layer.getContext('2d');
-            let BackPhone = new ToolsDraw(context, null, draw_map.width, draw_map.height)
-            BackPhone.setColorCurent(COLOR_CURENT)
-            BackPhone.setSizeLine(SIZE_LINE)
-            BackPhone.drawBoardKvad(boardWidth, boardHeight,"gray")
-        }else{
-            map.children[0].remove()
-        }
-        choice = null */
-    }
-    if(choice === "triangle_map"){
-        triangleMapFlag=!triangleMapFlag
-        if(triangleMapFlag){
-            map.insertAdjacentHTML("beforeend", canvasRedactor(-list_layer_map.length,boardWidth,boardHeight))
-            let layer = list_layer_map[1]
-            let context = layer.getContext('2d');
-            let BackPhone = new ToolsDraw(context, null, draw_map.width, draw_map.height)
-            BackPhone.setColorCurent(COLOR_CURENT)
-            BackPhone.setSizeLine(SIZE_LINE)
-            BackPhone.drawBoardTriangle(boardWidth, boardHeight,"gray")
-        }else{
-            map.children[1].remove()
+            // map.children[1].remove()
+            Tools_draw.drawBoardKvadClient(mapWidth,mapHeight,"gray",kvadMapFlag)
         }
         choice = null
     }
+
+    //     /*
+    //     kvadMapFlag=!kvadMapFlag
+    //     if(kvadMapFlag){
+    //         map.insertAdjacentHTML("afterbegin", canvasRedactor(list_layer_map.length,boardWidth,boardHeight))
+    //         let layer = list_layer_map[0]
+    //         let context = layer.getContext('2d');
+    //         let BackPhone = new ToolsDraw(context, null, draw_map.width, draw_map.height)
+    //         BackPhone.setColorCurent(COLOR_CURENT)
+    //         BackPhone.setSizeLine(SIZE_LINE)
+    //         BackPhone.drawBoardKvad(boardWidth, boardHeight,"gray")
+    //     }else{
+    //         map.children[0].remove()
+    //     }
+    //     choice = null */
+    // if(choice === "triangle_map"){
+    //     triangleMapFlag=!triangleMapFlag
+    //     if(triangleMapFlag){
+    //         map.insertAdjacentHTML("beforeend", canvasRedactor(-list_layer_map.length,boardWidth,boardHeight))
+    //         let layer = list_layer_map[1]
+    //         let context = layer.getContext('2d');
+    //         let BackPhone = new ToolsDraw(context, null, draw_map.width, draw_map.height)
+    //         BackPhone.setColorCurent(COLOR_CURENT)
+    //         BackPhone.setSizeLine(SIZE_LINE)
+    //         BackPhone.drawBoardTriangle(boardWidth, boardHeight,"gray")
+    //     }else{
+    //         map.children[1].remove()
+    //     }
+    //     choice = null
+    // }
 
 
 })

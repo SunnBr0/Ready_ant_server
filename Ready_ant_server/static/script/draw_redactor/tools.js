@@ -123,6 +123,31 @@ class ToolsDraw {
         }
     }
 
+    drawBoardKvadClient(width, height, color,flagMap){
+        console.log("object");
+        if(flagMap){
+            // this.fullClear()
+            this.drawBoardKvad(width,height,color)
+
+            for (let item = 0; item < this.arrayCoord.length; item++) {
+                this.context.beginPath();
+                this.context.fillStyle = this.COLOR_CURENT || "black"
+                this.context.strokeStyle = this.COLOR_CURENT || "#000000"
+                this.drawKvad(true, this.arrayCoord[item][0], this.arrayCoord[item][1])
+                this.context.closePath();
+            }
+        }else{
+            // this.fullClear()
+            for (let item = 0; item < this.arrayCoord.length; item++) {
+                this.context.beginPath();
+                this.context.fillStyle = this.COLOR_CURENT || "black"
+                this.context.strokeStyle = this.COLOR_CURENT || "#000000"
+                this.drawKvad(true, this.arrayCoord[item][0], this.arrayCoord[item][1])
+                this.context.closePath();
+            }
+        }
+    }
+
     drawBoardKvad(width, height, color) {
         let sizeKvad = Number(this.sizeFigure)
         this.context.strokeStyle = color
@@ -130,7 +155,13 @@ class ToolsDraw {
         // console.log(sizeKvad);
         for (let x = 0; x <= width; x += sizeKvad) {
             for (let y = 0; y <= height; y += sizeKvad) {
-                this.drawKvad(false, x, y);
+                if (this.choice === "zoom" ) {
+                    this.context.beginPath()
+                    this.drawKvad(false, x, y);
+                    this.context.closePath()
+                } else {
+                    this.drawKvad(false, x, y);
+                }
             }
         }
     }
@@ -166,6 +197,10 @@ class ToolsDraw {
         this.context.lineTo(coordX + sizeKvad, coordY); // линия вправо
         this.context.lineTo(coordX + sizeKvad, coordY + sizeKvad); // линия вниз
         this.context.lineTo(coordX, coordY + sizeKvad); // линия влево
+        if (this.choice === "zoom") {
+            this.context.closePath()
+        } 
+
         if (fillFlag) this.context.fill();
         else this.context.stroke();
     }
@@ -199,15 +234,17 @@ class ToolsDraw {
         const rSmall = (Math.sqrt(3) / 2) * r
         const mouseX = this.prevMouseX;
         const mouseY = this.prevMouseY;
-        const closestX = Math.floor(mouseX / ((2 * r) * k));
-        const closestY = Math.floor((mouseY - ((rSmall) * (closestX % 2))) / (2 * rSmall));
+        let closestX = Math.floor(mouseX / ((2 * r) * k));
+        let closestY = Math.floor((mouseY - ((rSmall) * (closestX % 2))) / (2 * rSmall));
 
 
         if (coordsX == null || coordsY == null) {
             y = closestY * (2 * rSmall) + ((rSmall) * (closestX % 2)) + r
             x = closestX * ((2 * r) * k) + r
         } else {
-            this.context.beginPath();
+            // this.context.beginPath();
+            closestX = Math.floor(coordsX / ((2 * r) * k));
+            closestY = Math.floor((coordsY - ((rSmall) * (closestX % 2))) / (2 * rSmall));
             y = closestY * (2 * rSmall) + ((rSmall) * (closestX % 2)) + r
             x = closestX * ((2 * r) * k) + r
         }
@@ -373,18 +410,18 @@ class ToolsDraw {
                 break;
             case "clear":
                 if (this.mainChoiceFigure == "kvad") {
-                    this.context.strokeStyle = "#fff"
-                    this.context.fillStyle = "#fff"
+                    this.context.strokeStyle = "#FFFFFF"
+                    this.context.fillStyle = "#FFFFFF"
                     this.drawKvad(true, this.prevMouseX, this.prevMouseY)
                 }
                 if (this.mainChoiceFigure == "full_color") {
-                    this.context.strokeStyle = "#fff"
-                    this.context.fillStyle = "#fff"
+                    this.context.strokeStyle = "#FFFFFF"
+                    this.context.fillStyle = "#FFFFFF"
                     this.drawHexagon(true)
                 }
                 if (this.mainChoiceFigure == "triangle") {
-                    this.context.strokeStyle = "#fff"
-                    this.context.fillStyle = "#fff"
+                    this.context.strokeStyle = "#FFFFFF"
+                    this.context.fillStyle = "#FFFFFF"
                     this.drawTriangle(true, this.prevMouseX, this.prevMouseY)
                 }
                 // this.context.strokeStyle = "#fff"
@@ -430,20 +467,41 @@ class ToolsDraw {
                 // const size = Number(this.sizeFigure);
                 // for (let x = 0; x < 2000; x += size) {
                 //     for (let y = 0; y < 2000; y += size) {
-                //         // this.context.beginPath();
-                //         // this.drawKvad(false, x, y);
-                //         // this.context.closePath();
+                //         this.context.beginPath();
+                //         this.context.fillStyle = this.COLOR_CURENT || "black"
+                //         this.context.strokeStyle = this.COLOR_CURENT || "#000000"
+                //         this.drawKvad(false, x, y);
+                //         this.context.closePath();
                 //         // this.arrayCoord
                 //         // console.log(this.arrayCoord);
                 //     }
                 // }
+                this.drawBoardKvad(2000, 2000, "gray")
                 // this.drawKvad(true, 150, 150);
+                this.context.beginPath();
+
                 for (let item = 0; item < this.arrayCoord.length; item++) {
                     // console.log(this.arrayCoord[item]);
-                    this.context.beginPath();
-                    this.drawKvad(true, this.arrayCoord[item][0], this.arrayCoord[item][1]);
-                    this.context.closePath();
+                    // console.log(this.arrayCoord);
+                    // this.context.beginPath();
+
+                    this.context.fillStyle = this.COLOR_CURENT || "black"
+                    this.context.strokeStyle = this.COLOR_CURENT || "#000000"
+                    if (this.mainChoiceFigure == "kvad") {
+                        this.drawKvad(true, this.arrayCoord[item][0], this.arrayCoord[item][1])
+                    }
+                    if (this.mainChoiceFigure == "full_color") {
+                        this.drawHexagon(true, this.arrayCoord[item][0], this.arrayCoord[item][1])
+                    }
+                    if (this.mainChoiceFigure == "triangle") {
+                        this.drawTriangle(true, this.arrayCoord[item][0], this.arrayCoord[item][1])
+                    }
+                    // this.drawHexagon(true,this.arrayCoord[item][0], this.arrayCoord[item][1])
+                    // this.drawTriangle(true, this.arrayCoord[item][0], this.arrayCoord[item][1])
+                    // this.drawKvad(true, this.arrayCoord[item][0], this.arrayCoord[item][1]);
+                    // this.context.closePath();
                 }
+                this.context.closePath();
                 this.context.restore();
                 break;
             case "full_clear":
