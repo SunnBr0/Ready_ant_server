@@ -1,9 +1,0 @@
-canvas {
-    background-color: gray;
-    position: absolute;
-    z-index: 3;
-    width: 100%;
-    height: calc(100% - 176px);
-    max-width: 1920px;
-    max-height: 700px;
-}

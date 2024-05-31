@@ -119,6 +119,10 @@ redactor_map_main.addEventListener("click", (event) => {
 
     if(choice === "kvad_map"){
         kvadMapFlag=!kvadMapFlag
+        // Tools_draw.setSizeLine(SIZE_LINE)
+        Tools_draw.setSizeLine(SIZE_LINE)
+
+        // Tools_draw.drawBoardKvadClient(mapWidth,mapHeight,"gray",kvadMapFlag)
         if(kvadMapFlag){
             // map.insertAdjacentHTML("beforeend", canvasRedactor(-list_layer_map.length,boardWidth,boardHeight))
             // let layer = list_layer_map[1]
@@ -127,10 +131,15 @@ redactor_map_main.addEventListener("click", (event) => {
             // BackPhone.setColorCurent(COLOR_CURENT)
             // BackPhone.setSizeLine(SIZE_LINE)
             // BackPhone.drawBoardKvad(boardWidth, boardHeight,"gray")
+            Tools_draw.bordClear(event)
             Tools_draw.drawBoardKvadClient(mapWidth,mapHeight,"gray",kvadMapFlag)
         }else{
-            // map.children[1].remove()
             Tools_draw.drawBoardKvadClient(mapWidth,mapHeight,"gray",kvadMapFlag)
+
+            // Tools_draw.bordClear(event)
+            // // map.children[1].remove()
+            // Tools_draw.setSizeLine(SIZE_LINE)
+            // Tools_draw.drawBoardKvadClient(mapWidth,mapHeight,"gray",kvadMapFlag)
         }
         choice = null
     }

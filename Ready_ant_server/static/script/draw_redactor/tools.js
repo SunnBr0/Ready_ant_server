@@ -51,7 +51,7 @@ class ToolsDraw {
         this.COLOR_CURENT = colorCurent
     }
     getInfoCenterHex() {
-        return { "CoordsHex": this.arrayCoord, "RadiusOrLine": this.sizeFigure, "Type": this.typeFigure, "MapWidth": this.width, "MapHeight": this.height }
+        return { "Coords": this.arrayCoord, "RadiusOrLine": this.sizeFigure, "Type": this.typeFigure, "MapWidth": this.width, "MapHeight": this.height }
     }
 
 
@@ -122,13 +122,17 @@ class ToolsDraw {
             else this.context.stroke();
         }
     }
-
+    bordClear(){
+        this.context.clearRect(0, 0, this.width, this.height);
+    }
     drawBoardKvadClient(width, height, color,flagMap){
         console.log("object");
+        this.mainChoiceFigure = "kvad"
+        this.mainSizeFigure = this.SIZE_LINE
+        let arrayCoord = this.arrayCoord
         if(flagMap){
-            // this.fullClear()
+            this.context.beginPath()
             this.drawBoardKvad(width,height,color)
-
             for (let item = 0; item < this.arrayCoord.length; item++) {
                 this.context.beginPath();
                 this.context.fillStyle = this.COLOR_CURENT || "black"
@@ -137,7 +141,7 @@ class ToolsDraw {
                 this.context.closePath();
             }
         }else{
-            // this.fullClear()
+            this.bordClear()
             for (let item = 0; item < this.arrayCoord.length; item++) {
                 this.context.beginPath();
                 this.context.fillStyle = this.COLOR_CURENT || "black"
@@ -282,9 +286,6 @@ class ToolsDraw {
 
     start(event, COLOR_CURENT, SIZE_LINE) {
         this.COLOR_CURENT = COLOR_CURENT
-        this.SIZE_LINE = SIZE_LINE
-        // this.startX = event.clientX - this.offsetX;
-        // this.startY = event.clientY - this.offsetY;
         this.is_drawing = true
         this.prevMouseX = event.offsetX
         this.prevMouseY = event.offsetY
@@ -292,6 +293,9 @@ class ToolsDraw {
         this.context.lineWidth = this.SIZE_LINE
         this.context.strokeStyle = this.COLOR_CURENT
         this.context.fillStyle = this.COLOR_CURENT;
+        this.SIZE_LINE = SIZE_LINE
+        // this.startX = event.clientX - this.offsetX;
+        // this.startY = event.clientY - this.offsetY;
         // console.log(this.SIZE_LINE);
         // console.log("DASDADSASD");
         switch (this.choice) {
@@ -446,6 +450,8 @@ class ToolsDraw {
             case "zoom":
                 this.offsetX = event.clientX - this.startX;
                 this.offsetY = event.clientY - this.startY;
+                console.log("offsetX: ",this.offsetX);
+                console.log("offsetY: ",this.offsetY);
                 // console.log(this.startX);
                 // Ограничение перетаскивания по горизонтали
                 // let maxOffsetX = 100;
@@ -476,7 +482,7 @@ class ToolsDraw {
                 //         // console.log(this.arrayCoord);
                 //     }
                 // }
-                this.drawBoardKvad(2000, 2000, "gray")
+                // this.drawBoardKvad(2000, 2000, "gray")
                 // this.drawKvad(true, 150, 150);
                 this.context.beginPath();
 

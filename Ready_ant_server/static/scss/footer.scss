@@ -1,0 +1,90 @@
+@import "mixin.scss";
+
+.footer {
+    width: 100%;
+    background-color: var(--blackBack);
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+
+    &__container {
+        margin: 0 auto;
+        padding: 20px 0;
+        width: 100%;
+        max-width: 1920px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__description {
+        margin-left: 40px;
+        font-family: "Rubik", sans-serif, serif;
+        font-weight: bold;
+        color: var(--grey);
+
+        @include md {
+            margin-left: 20px;
+        }
+    }
+
+    &__name {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    &__rules {
+        font-size: 16px;
+        margin: 0;
+    }
+
+    &__contacts {
+        display: flex;
+        list-style: none;
+
+        &-item {
+            color: var(--greyFooter);
+            white-space: nowrap;
+            padding: 10px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: "Inter", sans-serif, serif;
+            border-right: 1px solid var(--greyFooter);
+            text-decoration: none;
+
+            &:last-child {
+                border: none;
+            }
+
+            &:hover {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__social {
+        display: flex;
+        margin-left: 60px;
+        margin-right: 40px;
+
+        @include md {
+            margin-left: 30px;
+            margin-right: 20px;
+        }
+
+        &-image {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            margin-left: 15px;
+
+            @include md {
+                width: 30px;
+                height: 30px;
+                margin-left: 10px;
+            }
+        }
+    }
+}

@@ -1,0 +1,359 @@
+@import "mixin.scss";
+
+.header {
+    width: 100%;
+    background-color: var(--blackBack);
+    height: 90px;
+    margin: 0 auto;
+
+    &__container {
+        width: 100%;
+        height: 100%;;
+        max-width: 1920px;
+        margin: 0 auto;
+        padding: 20px 0;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__leftBlock {
+        display: flex;
+        align-items: center;
+        margin-left: 40px;
+
+        @include md {
+            margin-left: 20px;
+        }
+    }
+
+    &__logo {
+        width: 40px;
+        height: 40px;
+
+        @include md {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    &__name {
+        font-family: "Rubik", sans-serif, serif;
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--white);
+        margin-left: 10px;
+        margin-right: 30px;
+        text-transform: uppercase;
+
+        @include pm {
+            font-size: 20px;
+            margin-right: 20px;
+        }
+
+        @include lg {
+            font-size: 16px;
+            margin-right: 16px;
+        }
+
+        @include md {
+            font-size: 14px;
+            margin-right: 14px;
+        }
+
+        @include mb {
+            font-size: 12px;
+            margin-right: 12px;
+        }
+    }
+
+    &__btn {
+        cursor: pointer;
+        padding: 10px 24px;
+        border-radius: 20px;
+        font-family: "Inter", sans-serif, serif;
+        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        background-color: var(--white);
+        color: var(--darkBlue);
+        text-transform: uppercase;
+        white-space: nowrap;
+
+        &:hover {
+            background-color: var(--lightGrey);
+        }
+
+        &.profile{
+            border-radius: 20px 0 0 20px;
+            &:hover + .header__profile-image{
+                border: 5px solid var(--lightGrey);
+            }
+        }
+
+        @include pm{
+            font-size: 14px;
+            padding: 8px 18px;
+        }
+
+        @include lg{
+            font-size: 12px;
+            padding: 6px 16px;
+        }
+
+        @include md {
+            font-size: 10px;
+            padding: 6px 16px;
+        }
+
+        @include mb{
+            font-size: 10px;
+            padding: 4px 14px;
+        }
+
+        &-expand {
+            background-color: var(--white);
+            color: var(--darkBlue);
+            border: none;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 10px 48px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            margin: 0 10px;
+
+            &:hover {
+                background-color: var(--lightGrey);
+            }
+
+            @include pm{
+                font-size: 16px;
+                padding: 10px 32px;
+            }
+
+            @include lg{
+                font-size: 14px;
+                padding: 10px 24px;
+            }
+
+            @include md {
+                font-size: 14px;
+                padding: 8px 20px;
+            }
+
+            @include mb {
+                font-size: 12px;
+                padding: 6px 16px;
+            }
+        }
+    }
+
+    &__arrow {
+        width: 15px;
+        height: auto;
+    }
+
+    &__centerBlock {
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+    }
+
+    &__rightBlock {
+        display: flex;
+        align-items: center;
+        margin-right: 40px;
+
+        @include md {
+            margin-right: 20px;
+        }
+    }
+
+    &__country {
+        display: flex;
+        align-items: center;
+
+        &-name {
+            appearance: none;
+            border: none;
+            background: none;
+            font-family: "Inter", sans-serif, serif;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--white);
+            text-transform: uppercase;
+            padding: 10px 10px 10px 0;
+
+            &:focus,
+            &:hover,
+            &:active {
+                border: none;
+                outline: none;
+            }
+
+            &:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+            >option {
+                background-color: rgb(0, 0, 0, 0.8);
+                cursor: pointer;
+            }
+        }
+
+        &-flag {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    &__support {
+        font-family: "Inter", sans-serif, serif;
+        font-size: 14px;
+        font-weight: bold;
+        color: var(--white);
+        margin: 0 25px;
+        white-space: nowrap;
+        text-transform: uppercase;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        @include pm{
+            font-size: 14px;
+            margin: 0 20px;
+            white-space: wrap;
+        }
+
+        @include lg{
+            font-size: 12px;
+            margin: 0 16px;
+        }
+
+        @include md{
+            font-size: 12px;
+            margin: 0 12px;
+        }
+
+        @include mb{
+            font-size: 10px;
+            margin: 0 10px;
+        }
+    }
+
+    &__modal {
+        display: none;
+        padding-top: 50px;
+        padding-bottom: 15px;
+        background-color: var(--blackBack);
+        position: relative;
+        z-index: 5;
+
+        @include md {
+            padding-top: 40px;
+        }
+    }
+
+    &__title {
+        text-align: center;
+        font-weight: bold;
+        font-size: 64px;
+        font-family: "Inter", sans-serif, serif;
+        color: var(--white);
+        margin-bottom: 35px;
+
+        @include md {
+            margin-bottom: 25px;
+            font-size: 56px;
+        }
+    }
+
+    &__text {
+        width: 80%;
+        margin: 0 auto;
+        font-size: 24px;
+        font-family: "Inter", sans-serif, serif;
+        margin-bottom: 70px;
+        color: var(--white);
+
+        @include md {
+            font-size: 18px;
+        }
+
+        >button {
+            font-family: "Inter", sans-serif, serif;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+            text-decoration: underline;
+
+            &:last-child {
+                color: var(--gold);
+            }
+
+            &:hover {
+                text-decoration: none;
+            }
+
+            @include md {
+                font-size: 18px;
+            }
+        }
+    }
+
+    &__helper {
+        font-family: "Inter", sans-serif, serif;
+        font-size: 14px;
+        font-weight: bold;
+        color: var(--white);
+        margin: 0 25px;
+        white-space: nowrap;
+        text-transform: uppercase;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        @include pm{
+            display: none;
+            font-size: 14px;
+            margin: 0 20px 0 0;
+        }
+
+        @include lg{
+            font-size: 12px;
+            margin: 0 16px 0 0;
+        }
+
+        @include md{
+            font-size: 12px;
+            margin: 0 12px 0 0;
+        }
+
+        @include mb{
+            font-size: 10px;
+            margin: 0 10px 0 0;
+        }
+    }
+
+    &__profile{
+        display: flex;
+        align-items: center;
+        &-image{
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 5px solid var(--white);
+            position: relative;
+            left: -15px;
+        }
+    }
+}
